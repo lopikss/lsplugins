@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LsEnderChest Wiki</title>
+
+<style>
+
+:root{
+--bg:#0b1020;
+--bg2:#111933;
+--card:rgba(255,255,255,0.08);
+--line:rgba(255,255,255,0.12);
+--text:#eef2ff;
+--muted:#b8c0e0;
+--accent:#7c9cff;
+--accent2:#3dd9c5;
+--shadow:0 20px 60px rgba(0,0,0,0.35);
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+color:var(--text);
+background:
+radial-gradient(circle at top left,rgba(124,156,255,0.18),transparent 35%),
+radial-gradient(circle at top right,rgba(61,217,197,0.14),transparent 30%),
+linear-gradient(180deg,var(--bg),var(--bg2));
+line-height:1.65;
+}
+
+.wrap{
+max-width:1100px;
+margin:auto;
+padding:48px 22px 70px;
+}
+
+.hero{
+background:linear-gradient(135deg,rgba(124,156,255,0.18),rgba(61,217,197,0.10));
+border:1px solid var(--line);
+border-radius:28px;
+padding:36px;
+box-shadow:var(--shadow);
+}
+
+.badge{
+display:inline-block;
+padding:8px 14px;
+border-radius:999px;
+background:rgba(255,255,255,0.08);
+border:1px solid var(--line);
+color:var(--muted);
+font-size:.9rem;
+margin-bottom:18px;
+}
+
+h1{
+margin:0;
+font-size:3rem;
+letter-spacing:-0.03em;
+}
+
+.subtitle{
+margin-top:14px;
+color:var(--muted);
+max-width:700px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+margin-top:28px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:22px;
+padding:22px;
+box-shadow:var(--shadow);
+}
+
+h2{
+margin-top:0;
+font-size:1.3rem;
+}
+
+.code{
+margin-top:12px;
+background:rgba(0,0,0,0.35);
+padding:16px;
+border-radius:14px;
+font-family:JetBrains Mono,monospace;
+font-size:.9rem;
+white-space:pre-wrap;
+}
+
+.section{
+margin-top:30px;
+}
+
+.footer{
+margin-top:40px;
+text-align:center;
+color:var(--muted);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<section class="hero">
+
+<div class="badge">Ls Plugins Documentation</div>
+
+<h1>LsEnderChest</h1>
+
+<p class="subtitle">
+LsEnderChest is a modern replacement for the vanilla Ender Chest system.
+Instead of using the default fixed storage size, this plugin introduces a
+permission-based expandable Ender Chest system allowing servers to create
+rank-based storage upgrades for players.
+</p>
+
+</section>
+
+
+
+<!-- FEATURES -->
+
+<div class="grid section">
+
+<section class="card">
+
+<h2>Expandable Ender Chest System</h2>
+
+<p>
+LsEnderChest replaces the default Ender Chest inventory with a dynamically
+generated inventory size based on player permissions.
+</p>
+
+<p>
+Instead of the vanilla 27 slots, players may have up to <b>6 rows (54 slots)</b>.
+</p>
+
+<div class="code">
+enderchest.rows.1
+enderchest.rows.2
+enderchest.rows.3
+enderchest.rows.4
+enderchest.rows.5
+enderchest.rows.6
+</div>
+
+<p>
+The plugin automatically checks permissions using the internal
+PermissionManager and selects the highest available row permission.
+</p>
+
+</section>
+
+
+
+<section class="card">
+
+<h2>Commands</h2>
+
+<p>LsEnderChest provides a simple command system.</p>
+
+<div class="code">
+/lsec
+Opens your own Ender Chest.
+
+/lsec &lt;player&gt;
+Opens another player's Ender Chest.
+(Admin permission required)
+</div>
+
+</section>
+
+
+
+<section class="card">
+
+<h2>Permissions</h2>
+
+<div class="code">
+enderchest.use
+Allows opening your own chest
+
+enderchest.admin
+Allows opening other players chests
+
+enderchest.bypass
+Bypass restrictions
+
+enderchest.rows.1
+enderchest.rows.2
+enderchest.rows.3
+enderchest.rows.4
+enderchest.rows.5
+enderchest.rows.6
+Controls maximum chest rows
+</div>
+
+</section>
+
+
+
+<section class="card">
+
+<h2>Offline Player Support</h2>
+
+<p>
+The plugin supports viewing and editing Ender Chests of offline players.
+</p>
+
+<p>
+This is made possible by storing inventory contents inside the database
+instead of relying on the vanilla Ender Chest storage system.
+</p>
+
+</section>
+
+</div>
+
+
+
+<!-- STORAGE -->
+
+<section class="card section">
+
+<h2>Storage System</h2>
+
+<p>
+LsEnderChest uses a flexible storage system defined by the
+<b>StorageProvider</b> interface.
+</p>
+
+<p>
+Two storage implementations are included:
+</p>
+
+<div class="code">
+SQLiteStorage
+MySQLStorage
+</div>
+
+<p>
+Both storage providers save player inventory contents using serialized
+ItemStack data.
+</p>
+
+<p>
+This allows the plugin to restore Ender Chest inventories exactly as they
+were stored.
+</p>
+
+</section>
+
+
+
+<!-- DATABASE -->
+
+<section class="card section">
+
+<h2>Database Support</h2>
+
+<p>
+Server owners may choose between SQLite and MySQL depending on their setup.
+</p>
+
+<div class="code">
+SQLite
+Default storage
+No external database required
+
+MySQL
+Recommended for large servers
+Supports multi-server environments
+</div>
+
+<p>
+The database stores:
+</p>
+
+<div class="code">
+player_uuid
+inventory_contents
+last_update
+</div>
+
+</section>
+
+
+
+<!-- ARCHITECTURE -->
+
+<section class="card section">
+
+<h2>Plugin Architecture</h2>
+
+<p>
+The plugin is designed with a modular architecture using several manager
+classes.
+</p>
+
+<div class="code">
+LsEnderChestPlugin
+Main plugin class
+
+ChestManager
+Handles opening and saving inventories
+
+PermissionManager
+Determines row limits based on permissions
+
+PlayerIdManager
+Handles player UUID lookups
+
+StorageProvider
+Abstract storage system
+
+MySQLStorage / SQLiteStorage
+Database implementations
+</div>
+
+</section>
+
+
+
+<!-- LISTENER -->
+
+<section class="card section">
+
+<h2>Chest Listener</h2>
+
+<p>
+The plugin listens for Ender Chest interactions using the
+<b>ChestListener</b>.
+</p>
+
+<p>
+When a player interacts with an Ender Chest block, the plugin cancels the
+default vanilla behavior and replaces it with the custom expandable chest.
+</p>
+
+<p>
+This ensures all Ender Chest access is controlled by the plugin.
+</p>
+
+</section>
+
+
+
+<!-- UPDATE CHECKER -->
+
+<section class="card section">
+
+<h2>Update Checker</h2>
+
+<p>
+LsEnderChest includes an integrated update checking system.
+</p>
+
+<p>
+The plugin periodically checks if a new version is available and notifies
+server administrators using the <b>UpdateNotifyListener</b>.
+</p>
+
+<p>
+This ensures servers always run the latest version.
+</p>
+
+</section>
+
+
+
+<!-- INSTALL -->
+
+<section class="card section">
+
+<h2>Installation</h2>
+
+<div class="code">
+1 Download the plugin
+
+2 Place the .jar file inside the plugins folder
+
+3 Start or restart your server
+
+4 Configure config.yml if necessary
+</div>
+
+</section>
+
+
+
+<!-- COMPATIBILITY -->
+
+<section class="card section">
+
+<h2>Compatibility</h2>
+
+<div class="code">
+Server Software
+Paper
+
+Minecraft Version
+1.21.x
+
+Java Version
+Java 21
+</div>
+
+</section>
+
+
+
+<p class="footer">
+LsEnderChest Documentation • Created by lopikss
+</p>
+
+</div>
+
+</body>
+</html>
