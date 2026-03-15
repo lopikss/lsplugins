@@ -1,442 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LsEnderChest Wiki</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LsEnderChest Wiki</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #111933;
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.12);
+      --text: #eef2ff;
+      --muted: #b8c0e0;
+      --accent: #7c9cff;
+      --accent2: #3dd9c5;
+      --shadow: 0 20px 60px rgba(0,0,0,0.30);
+    }
 
-<style>
+    * { box-sizing: border-box; }
 
-:root{
---bg:#0b1020;
---bg2:#111933;
---panel:rgba(255,255,255,0.06);
---panel-strong:rgba(255,255,255,0.08);
---line:rgba(255,255,255,0.12);
---text:#eef2ff;
---muted:#b8c0e0;
---accent:#7c9cff;
---accent2:#3dd9c5;
---shadow:0 20px 60px rgba(0,0,0,0.30);
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-*{box-sizing:border-box}
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124,156,255,0.16), transparent 35%),
+        radial-gradient(circle at top right, rgba(61,217,197,0.12), transparent 30%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      line-height: 1.75;
+    }
 
-html{
-scroll-behavior:smooth;
-}
+    .wrap {
+      max-width: 1400px;
+      width: 92%;
+      margin: 0 auto;
+      padding: 40px 0 72px;
+    }
 
-body{
-margin:0;
-font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
-color:var(--text);
-background:
-radial-gradient(circle at top left,rgba(124,156,255,0.16),transparent 35%),
-radial-gradient(circle at top right,rgba(61,217,197,0.12),transparent 30%),
-linear-gradient(180deg,var(--bg),var(--bg2));
-line-height:1.75;
-}
+    .hero {
+      background: linear-gradient(135deg, rgba(124,156,255,0.16), rgba(61,217,197,0.08));
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 40px 46px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
 
-.wrap{
-max-width:1400px;
-width:75%;
-margin:0 auto;
-padding:40px 0 72px;
-}
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
 
-.hero{
-background:linear-gradient(135deg,rgba(124,156,255,0.16),rgba(61,217,197,0.08));
-border:1px solid var(--line);
-border-radius:26px;
-padding:40px 46px;
-box-shadow:var(--shadow);
-}
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
 
-.badge{
-display:inline-flex;
-align-items:center;
-gap:8px;
-padding:8px 14px;
-border-radius:999px;
-background:rgba(255,255,255,0.06);
-border:1px solid var(--line);
-color:var(--muted);
-font-size:.92rem;
-margin-bottom:18px;
-}
+    .subtitle {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 960px;
+    }
 
-h1{
-margin:0;
-font-size:clamp(2.4rem,4vw,4rem);
-line-height:1.05;
-letter-spacing:-0.03em;
-}
+    .topnav {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-.subtitle{
-margin:16px 0 0;
-color:var(--muted);
-font-size:1.08rem;
-max-width:960px;
-}
+    .topnav a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      font-size: 0.95rem;
+      transition: 0.18s ease;
+    }
 
-.topnav{
-margin-top:24px;
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-}
+    .topnav a:hover {
+      color: var(--text);
+      border-color: rgba(124,156,255,0.35);
+      background: rgba(255,255,255,0.08);
+    }
 
-.topnav a{
-color:var(--muted);
-text-decoration:none;
-padding:9px 14px;
-border-radius:999px;
-border:1px solid var(--line);
-background:rgba(255,255,255,0.05);
-font-size:.95rem;
-transition:.18s;
-}
+    .section {
+      margin-top: 28px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 32px 34px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
 
-.topnav a:hover{
-color:var(--text);
-border-color:rgba(124,156,255,0.35);
-background:rgba(255,255,255,0.08);
-}
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+    }
 
-.section{
-margin-top:28px;
-background:var(--panel);
-border:1px solid var(--line);
-border-radius:22px;
-padding:32px 34px;
-box-shadow:var(--shadow);
-}
+    h3 {
+      margin: 22px 0 10px;
+      font-size: 1.07rem;
+      letter-spacing: -0.01em;
+    }
 
-h2{
-margin:0 0 14px;
-font-size:1.5rem;
-}
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
 
-h3{
-margin:22px 0 10px;
-font-size:1.05rem;
-}
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
 
-p{
-margin:0 0 14px;
-color:var(--muted);
-}
+    li + li {
+      margin-top: 10px;
+    }
 
-ul{
-margin:0;
-padding-left:20px;
-color:var(--muted);
-}
+    .code {
+      margin-top: 14px;
+      background: rgba(7, 12, 24, 0.72);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      overflow-x: auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
 
-li+li{
-margin-top:10px;
-}
+    .code pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #e8eeff;
+      font-size: 0.96rem;
+      line-height: 1.7;
+      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+    }
 
-.code{
-margin-top:14px;
-background:rgba(7,12,24,0.72);
-border:1px solid var(--line);
-border-radius:18px;
-padding:18px;
-overflow-x:auto;
-}
+    .note {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(61,217,197,0.18);
+      background: rgba(61,217,197,0.08);
+      color: #dffcf8;
+    }
 
-.code pre{
-margin:0;
-white-space:pre-wrap;
-color:#e8eeff;
-font-size:.96rem;
-font-family:"JetBrains Mono","Fira Code",monospace;
-}
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
 
-.note{
-margin-top:16px;
-padding:16px;
-border-radius:16px;
-border:1px solid rgba(61,217,197,0.18);
-background:rgba(61,217,197,0.08);
-}
+    .mini-card {
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+    }
 
-.preview{
-margin-top:16px;
-border-radius:18px;
-overflow:hidden;
-border:1px solid var(--line);
-}
+    .mini-card h3 {
+      margin-top: 0;
+    }
 
-.preview img{
-width:100%;
-display:block;
-}
+    .preview {
+      margin-top: 16px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.2);
+    }
 
-.footer{
-margin-top:24px;
-text-align:center;
-color:var(--muted);
-font-size:.95rem;
-}
+    .preview img {
+      width: 100%;
+      display: block;
+    }
 
-</style>
+    .muted-strong {
+      color: #d8e2ff;
+    }
+
+    a {
+      color: var(--accent2);
+    }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .wrap {
+        width: 95%;
+      }
+
+      .hero {
+        padding: 28px;
+      }
+
+      .section {
+        padding: 24px;
+      }
+
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        padding-top: 20px;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      .topnav a {
+        font-size: 0.92rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="wrap">
-
-<section class="hero">
-
-<div class="badge">Ls Plugins • Documentation Wiki</div>
-
-<h1>LsEnderChest</h1>
-
-<p class="subtitle">
-LsEnderChest is a modern Ender Chest replacement for Paper 1.21.x servers. It replaces the vanilla fixed-size Ender Chest with a permission-based expandable storage system, allowing servers to give players different storage sizes depending on rank, perks, or progression.
-</p>
-
-<nav class="topnav">
-<a href="#overview">Overview</a>
-<a href="#features">Features</a>
-<a href="#commands">Commands</a>
-<a href="#permissions">Permissions</a>
-<a href="#storage">Storage</a>
-<a href="#config">Config Guide</a>
-<a href="#compatibility">Compatibility</a>
-<a href="#installation">Installation</a>
-</nav>
-
-</section>
-
-
-
-<section class="section" id="overview">
-
-<h2>Overview</h2>
-
-<p>
-Vanilla Minecraft limits Ender Chests to a fixed size. LsEnderChest replaces that behavior with a custom system that lets you decide how many rows a player should have based on permissions.
-</p>
-
-<p>
-This makes it ideal for survival servers, donor ranks, store perks, and progression systems. A player can have anywhere from <b>1 to 6 rows</b>.
-</p>
-
-<div class="note">
-LsEnderChest is designed to stay lightweight and simple while still supporting SQLite and MySQL database storage.
-</div>
-
-</section>
-
-
-
-<section class="section" id="features">
-
-<h2>Features</h2>
-
-<ul>
-
-<li><b>Expandable storage</b> – players can have 1 to 6 rows.</li>
-
-<li><b>Rank upgrades</b> – permissions can control chest size.</li>
-
-<li><b>Staff tools</b> – admins can open other players' chests.</li>
-
-<li><b>Offline player support</b> – view inventories even when players are offline.</li>
-
-<li><b>SQLite and MySQL support</b> – flexible storage backend.</li>
-
-<li><b>Lightweight design</b> – optimized to avoid unnecessary server load.</li>
-
-</ul>
-
-</section>
-
-
-
-<section class="section" id="commands">
-
-<h2>Commands</h2>
-
-<h3>/lsec</h3>
-
-<p>Opens your own Ender Chest using the plugin system.</p>
-
-<h3>/lsec &lt;player&gt;</h3>
-
-<p>Allows administrators to open another player's Ender Chest.</p>
-
-<div class="code">
-
-<pre>
-/lsec
-/lsec &lt;player&gt;
-</pre>
-
-</div>
-
-</section>
-
-
-
-<section class="section" id="permissions">
-
-<h2>Permissions</h2>
-
-<div class="code">
-
-<pre>
-enderchest.use
-enderchest.admin
-enderchest.bypass
-
-enderchest.rows.1
-enderchest.rows.2
-enderchest.rows.3
-enderchest.rows.4
-enderchest.rows.5
-enderchest.rows.6
-</pre>
-
-</div>
-
-<p style="margin-top:12px">
-Row permissions control the maximum storage size available to a player.
-</p>
-
-</section>
-
-
-
-<section class="section" id="storage">
-
-<h2>Storage System</h2>
-
-<p>
-LsEnderChest stores Ender Chest inventories in a database rather than relying on vanilla storage.
-</p>
-
-<h3>SQLite</h3>
-
-<p>
-Default option and recommended for single servers.
-</p>
-
-<h3>MySQL</h3>
-
-<p>
-Recommended for larger servers or networks.
-</p>
-
-</section>
-
-
-
-<section class="section" id="config">
-
-<h2>Config Guide</h2>
-
-<div class="note">
-
-<div class="code">
-<pre>
-storage-type: SQLITE
-
-mysql:
-  host: localhost
-  port: 3306
-  database: lsenderchest
-  username: root
-  password: password
-
-default-rows: 1
-max-rows: 6
-admin-bypass: true
-</pre>
-</div>
-
-<p style="margin-top:14px">
-This configuration file controls how the plugin handles storage and permissions.
-</p>
-
-<ul>
-
-<li><b>storage-type</b> – Choose SQLITE or MYSQL.</li>
-
-<li><b>default-rows</b> – Rows given if the player has no permissions.</li>
-
-<li><b>max-rows</b> – Maximum rows allowed.</li>
-
-<li><b>admin-bypass</b> – Allows admins to bypass restrictions.</li>
-
-</ul>
-
-</div>
-
-</section>
-
-
-
-<section class="section">
-
-<h2>Preview</h2>
-
-<div class="preview">
-
-<img src="https://media.discordapp.net/attachments/890970451579371590/1482690647008874671/echest.png">
-
-</div>
-
-</section>
-
-
-
-<section class="section" id="compatibility">
-
-<h2>Compatibility</h2>
-
-<ul>
-
-<li><b>Server Software:</b> Paper</li>
-
-<li><b>Minecraft Version:</b> 1.21.x</li>
-
-<li><b>Java Version:</b> Java 21</li>
-
-</ul>
-
-</section>
-
-
-
-<section class="section" id="installation">
-
-<h2>Installation</h2>
-
-<div class="code">
-
-<pre>
-1. Download the plugin jar
-2. Place it in the plugins folder
-3. Restart the server
-4. Configure config.yml if needed
-5. Assign row permissions
-</pre>
-
-</div>
-
-</section>
-
-
-
-<p class="footer">
-LsEnderChest wiki • created by lopikss
-</p>
-
-</div>
-
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="badge">Ls Plugins • Documentation Wiki</div>
+      <h1>LsEnderChest</h1>
+      <p class="subtitle">
+        LsEnderChest is a modern Ender Chest replacement for Paper 1.21.x servers. It replaces the vanilla fixed-size Ender Chest with a permission-based expandable storage system, allowing servers to give players different storage sizes depending on rank, perks, or progression. It is designed to stay lightweight, easy to manage, and flexible enough for both simple and more advanced setups.
+      </p>
+
+      <nav class="topnav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#commands">Commands</a>
+        <a href="#permissions">Permissions</a>
+        <a href="#storage">Storage</a>
+        <a href="#config-guide">Config Guide</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#compatibility">Compatibility</a>
+        <a href="#installation">Installation</a>
+      </nav>
+    </section>
+
+    <section class="section" id="overview">
+      <h2>Overview</h2>
+      <p>
+        Vanilla Minecraft limits Ender Chests to a fixed size. LsEnderChest replaces that behavior with a custom system that lets you decide how many rows a player should have based on permissions.
+      </p>
+      <p>
+        This makes it ideal for survival servers, donor ranks, store perks, progression systems, and admin tools. A player can have anywhere from <strong class="muted-strong">1 to 6 rows</strong>, while staff can inspect other players’ storage when needed.
+      </p>
+      <p>
+        Because the plugin uses its own storage handling, it is not tied to the limitations of the vanilla Ender Chest system. That allows it to support larger inventories, staff access, and offline player viewing in a clean way.
+      </p>
+      <div class="note">
+        LsEnderChest is designed to stay lightweight and simple for server owners while still supporting more advanced setups through SQLite and MySQL.
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <h2>Features</h2>
+      <ul>
+        <li><strong>Expandable storage</strong> – Players can have between 1 and 6 rows depending on their permissions.</li>
+        <li><strong>Rank-based upgrades</strong> – Perfect for survival servers that use permissions or ranks to reward players with additional storage.</li>
+        <li><strong>Staff inspection tools</strong> – Administrators can open and inspect another player's Ender Chest for moderation, support, or item recovery cases.</li>
+        <li><strong>Offline player support</strong> – Staff can view the Ender Chests of players even when they are offline.</li>
+        <li><strong>Flexible database storage</strong> – Supports both SQLite and MySQL for different server environments.</li>
+        <li><strong>Lightweight architecture</strong> – Designed to run efficiently without adding unnecessary load to your server.</li>
+        <li><strong>Vanilla replacement</strong> – Replaces the standard Ender Chest flow with the plugin system for better control and customization.</li>
+        <li><strong>Offline-mode support</strong> – Can be used on both online-mode and offline-mode servers where supported by your setup.</li>
+      </ul>
+    </section>
+
+    <section class="section" id="commands">
+      <h2>Commands</h2>
+      <p>
+        LsEnderChest keeps commands intentionally small and easy to remember so players and staff can use it without needing to learn a complex command system.
+      </p>
+
+      <h3>/lsec</h3>
+      <p>
+        Opens your personal Ender Chest using the plugin’s custom storage system. The inventory size will automatically adjust depending on the highest row permission the player has been granted.
+      </p>
+
+      <h3>/lsec &lt;player&gt;</h3>
+      <p>
+        Opens the Ender Chest belonging to another player. This command is intended for administrators and moderators who need to inspect, verify, or manage a player's stored items.
+      </p>
+
+      <div class="code">
+        <pre>/lsec
+/lsec &lt;player&gt;</pre>
+      </div>
+    </section>
+
+    <section class="section" id="permissions">
+      <h2>Permissions</h2>
+      <p>
+        Permissions control both access and storage size. This makes the plugin very easy to integrate with rank systems, store packages, or progression-based permission setups using plugins such as LuckPerms.
+      </p>
+
+      <div class="mini-grid">
+        <div class="mini-card">
+          <h3>Access Permissions</h3>
+          <ul>
+            <li><strong>enderchest.use</strong> — allows a player to open their own chest</li>
+            <li><strong>enderchest.admin</strong> — allows opening other players’ chests</li>
+            <li><strong>enderchest.bypass</strong> — bypasses restrictions where applicable</li>
+          </ul>
+        </div>
+
+        <div class="mini-card">
+          <h3>Row Permissions</h3>
+          <ul>
+            <li><strong>enderchest.rows.1</strong> — 1 row</li>
+            <li><strong>enderchest.rows.2</strong> — 2 rows</li>
+            <li><strong>enderchest.rows.3</strong> — 3 rows</li>
+            <li><strong>enderchest.rows.4</strong> — 4 rows</li>
+            <li><strong>enderchest.rows.5</strong> — 5 rows</li>
+            <li><strong>enderchest.rows.6</strong> — 6 rows</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="margin-top:16px;">
+        In practice, you would usually assign these row permissions to ranks. For example, default players may get 1 or 2 rows, while VIP or higher tiers receive larger Ender Chests.
+      </p>
+    </section>
+
+    <section class="section" id="storage">
+      <h2>Storage System</h2>
+      <p>
+        LsEnderChest stores chest contents outside of the vanilla Ender Chest system. This makes it possible to support expandable sizes, offline access, and more flexible data handling.
+      </p>
+
+      <h3>SQLite</h3>
+      <p>
+        SQLite is the easiest option and is usually the best default for single-server setups. It does not require any external database software and works well for most small and medium servers.
+      </p>
+
+      <h3>MySQL</h3>
+      <p>
+        MySQL is better suited for larger environments or networks that prefer dedicated database infrastructure. It is also a stronger option when you want your storage managed outside the local server files.
+      </p>
+
+      <h3>Why database-backed storage matters</h3>
+      <ul>
+        <li>Supports non-vanilla inventory sizes</li>
+        <li>Makes offline player data easier to manage</li>
+        <li>Keeps storage separate from Mojang’s default Ender Chest handling</li>
+        <li>Allows staff tools to access saved chest data more reliably</li>
+      </ul>
+    </section>
+
+    <section class="section" id="config-guide">
+      <h2>Config Guide</h2>
+      <p>
+        Below is the full <strong class="muted-strong">config-guide.yml</strong> reference. This guide explains what each option in the normal config does, what values are expected, and what server owners should pay attention to when changing storage or player settings.
+      </p>
+
+      <div class="note">
+        This is especially useful for server owners who want to switch between SQLite and MySQL, adjust default row sizes, or understand how online-mode UUID handling affects stored player data.
+      </div>
+
+      <div class="code">
+        <pre># =========================================================
+# LsEnderChest - config-guide.yml
+# =========================================================
+#
+# This file explains every option in the normal config.yml.
+#
+# This plugin allows players to have custom ender chests
+# with permission-based row sizes and SQL storage.
+#
+# Supported storage types:
+#   sqlite -&gt; local database file (recommended)
+#   mysql  -&gt; external MySQL database (recommended if you want same ender chest storage across multiple servers)
+#
+# =========================================================
+
+
+storage:
+
+  # Choose how ender chest data should be stored.
+  #
+  # Options:
+  #   sqlite -&gt; stores data locally in a .db file
+  #   mysql  -&gt; stores data in a MySQL database
+  #
+  type: "sqlite"
+
+  sqlite:
+
+    # Name of the SQLite database file.
+    #
+    # The file will be created inside the plugin folder.
+    #
+    # Example location:
+    # plugins/LsEnderChest/lsenderchest.db
+    #
+    file: "lsenderchest.db"
+
+  mysql:
+
+    # Address of the MySQL server.
+    #
+    # Examples:
+    # localhost
+    # 127.0.0.1
+    # db.example.com
+    #
+    host: "localhost"
+
+    # MySQL server port.
+    # Default MySQL port: 3306
+    #
+    port: 3306
+
+    # Name of the database used by the plugin.
+    #
+    database: "lsenderchest"
+
+    # MySQL username used to connect.
+    #
+    username: "user"
+
+    # MySQL password used to connect.
+    #
+    password: "password"
+
+    # Extra connection parameters.
+    #
+    # Usually does not need to be changed.
+    #
+    parameters: "?useSSL=false&amp;autoReconnect=true"
+
+
+settings:
+
+  # Controls how player UUIDs are generated.
+  #
+  # true  -&gt; normal Mojang UUIDs (online-mode servers)
+  # false -&gt; offline-mode/cracked UUID generation
+  #
+  # IMPORTANT:
+  # Changing this after players already have stored data
+  # may cause their old ender chest data to appear missing.
+  #
+  online-mode: true
+
+
+  # Default amount of rows a player receives if they
+  # do not have any row permissions.
+  #
+  # Minimum: 1
+  # Maximum: 6
+  #
+  default-rows: 1
+
+
+  # Controls /lsec tab completion.
+  #
+  # true  -&gt; shows players who joined before
+  # false -&gt; only shows online players
+  #
+  tab-complete-offline-players: true
+
+  # the displayed messages when certain events happen.
+messages:
+  no-permission: "&amp;cYou do not have permission."
+  player-not-found: "&amp;cThat player could not be found."
+  opened-other: "&amp;aOpened %player%'s ender chest."
+  reloaded: "&amp;aConfiguration reloaded."</pre>
+      </div>
+
+      <div class="mini-grid">
+        <div class="mini-card">
+          <h3>Important Notes</h3>
+          <ul>
+            <li><strong>SQLite</strong> is recommended for most single-server setups because it is simple and local.</li>
+            <li><strong>MySQL</strong> is better when you want shared storage across multiple servers or a dedicated database setup.</li>
+            <li>Changing <strong>online-mode</strong> after players already have data can make existing inventories appear missing because UUIDs may no longer match.</li>
+          </ul>
+        </div>
+
+        <div class="mini-card">
+          <h3>What You Will Usually Edit</h3>
+          <ul>
+            <li><strong>storage.type</strong> to choose SQLite or MySQL</li>
+            <li><strong>mysql</strong> credentials if using an external database</li>
+            <li><strong>default-rows</strong> to define the base storage size</li>
+            <li><strong>messages</strong> to customize player-facing plugin messages</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="use-cases">
+      <h2>Practical Use Cases</h2>
+      <p>
+        LsEnderChest works especially well on servers where storage is part of progression, monetization, or moderation.
+      </p>
+      <ul>
+        <li>Give default players a small Ender Chest and higher ranks more space.</li>
+        <li>Offer extra rows as a store perk without creating separate storage plugins.</li>
+        <li>Allow staff to inspect chests during support tickets or moderation cases.</li>
+        <li>Review offline player storage when handling reports, suspicious activity, or recovery requests.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Preview</h2>
+      <p>
+        Example screenshot of the plugin in use.
+      </p>
+      <div class="preview">
+        <img src="https://media.discordapp.net/attachments/890970451579371590/1482690647008874671/echest.png?ex=69b7dec5&is=69b68d45&hm=6fef7c6d4cca6dcdc8ceeec665730aa5a7e5ab0b03cf48ad2de9ed903ec2e705&=&format=webp&quality=lossless&width=943&height=653" alt="LsEnderChest preview">
+      </div>
+    </section>
+
+    <section class="section" id="compatibility">
+      <h2>Compatibility</h2>
+      <ul>
+        <li><strong>Server software:</strong> Paper</li>
+        <li><strong>Minecraft version:</strong> 1.21.x</li>
+        <li><strong>Java version:</strong> Java 21</li>
+      </ul>
+      <p style="margin-top:14px;">
+        The plugin is intended for modern Paper servers and is built around current API expectations for the 1.21.x version range.
+      </p>
+    </section>
+
+    <section class="section" id="installation">
+      <h2>Installation</h2>
+      <p>
+        Installing LsEnderChest is straightforward and only takes a few steps.
+      </p>
+      <div class="code">
+        <pre>1. Download the plugin jar
+2. Place it in your server's plugins folder
+3. Start or restart the server
+4. Edit config.yml if needed
+5. Assign row permissions to your ranks
+6. Test /lsec in-game to confirm everything works</pre>
+      </div>
+    </section>
+
+    <p class="footer">
+      LsEnderChest wiki • made for lopikss
+    </p>
+
+  </div>
 </body>
 </html>
