@@ -34,7 +34,7 @@
         linear-gradient(180deg, var(--bg), var(--bg2));
       line-height: 1.75;
     }
-    
+
     .wrap {
       max-width: 1400px;
       width: 92%;
@@ -46,7 +46,7 @@
       background: linear-gradient(135deg, rgba(124,156,255,0.16), rgba(61,217,197,0.08));
       border: 1px solid var(--line);
       border-radius: 26px;
-      padding: 34px;
+      padding: 40px 46px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
@@ -66,7 +66,7 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(2.2rem, 4vw, 3.3rem);
+      font-size: clamp(2.4rem, 4vw, 4rem);
       line-height: 1.05;
       letter-spacing: -0.03em;
     }
@@ -74,12 +74,12 @@
     .subtitle {
       margin: 16px 0 0;
       color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 740px;
+      font-size: 1.08rem;
+      max-width: 960px;
     }
 
     .topnav {
-      margin-top: 22px;
+      margin-top: 24px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -88,37 +88,39 @@
     .topnav a {
       color: var(--muted);
       text-decoration: none;
-      padding: 8px 12px;
+      padding: 9px 14px;
       border-radius: 999px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.05);
-      font-size: 0.94rem;
+      font-size: 0.95rem;
+      transition: 0.18s ease;
     }
 
     .topnav a:hover {
       color: var(--text);
       border-color: rgba(124,156,255,0.35);
+      background: rgba(255,255,255,0.08);
     }
 
     .section {
-      margin-top: 26px;
+      margin-top: 28px;
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 22px;
-      padding: 28px;
+      padding: 32px 34px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
 
     h2 {
       margin: 0 0 14px;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       letter-spacing: -0.02em;
     }
 
     h3 {
       margin: 22px 0 10px;
-      font-size: 1.05rem;
+      font-size: 1.07rem;
       letter-spacing: -0.01em;
     }
 
@@ -134,7 +136,7 @@
     }
 
     li + li {
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .code {
@@ -177,7 +179,7 @@
       background: var(--panel-strong);
       border: 1px solid var(--line);
       border-radius: 18px;
-      padding: 18px;
+      padding: 20px;
     }
 
     .mini-card h3 {
@@ -197,6 +199,10 @@
       display: block;
     }
 
+    .muted-strong {
+      color: #d8e2ff;
+    }
+
     a {
       color: var(--accent2);
     }
@@ -208,18 +214,35 @@
       font-size: 0.95rem;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 900px) {
       .wrap {
-        padding-top: 20px;
+        width: 95%;
       }
 
-      .hero,
+      .hero {
+        padding: 28px;
+      }
+
       .section {
-        padding: 22px;
+        padding: 24px;
       }
 
       .mini-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        padding-top: 20px;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      .topnav a {
+        font-size: 0.92rem;
       }
     }
   </style>
@@ -231,7 +254,7 @@
       <div class="badge">Ls Plugins • Documentation Wiki</div>
       <h1>LsEnderChest</h1>
       <p class="subtitle">
-        LsEnderChest is a modern Ender Chest replacement for Paper 1.21.x servers. It turns the vanilla Ender Chest into a permission-based expandable storage system with support for rank upgrades, offline players, and database-backed persistence.
+        LsEnderChest is a modern Ender Chest replacement for Paper 1.21.x servers. It replaces the vanilla fixed-size Ender Chest with a permission-based expandable storage system, allowing servers to give players different storage sizes depending on rank, perks, or progression. It is designed to stay lightweight, easy to manage, and flexible enough for both simple and more advanced setups.
       </p>
 
       <nav class="topnav">
@@ -240,6 +263,7 @@
         <a href="#commands">Commands</a>
         <a href="#permissions">Permissions</a>
         <a href="#storage">Storage</a>
+        <a href="#use-cases">Use Cases</a>
         <a href="#compatibility">Compatibility</a>
         <a href="#installation">Installation</a>
       </nav>
@@ -251,7 +275,10 @@
         Vanilla Minecraft limits Ender Chests to a fixed size. LsEnderChest replaces that behavior with a custom system that lets you decide how many rows a player should have based on permissions.
       </p>
       <p>
-        This makes it ideal for survival servers, donor ranks, store perks, progression systems, and admin tools. A player can have anywhere from <strong>1 to 6 rows</strong>, while staff can inspect other players’ storage when needed.
+        This makes it ideal for survival servers, donor ranks, store perks, progression systems, and admin tools. A player can have anywhere from <strong class="muted-strong">1 to 6 rows</strong>, while staff can inspect other players’ storage when needed.
+      </p>
+      <p>
+        Because the plugin uses its own storage handling, it is not tied to the limitations of the vanilla Ender Chest system. That allows it to support larger inventories, staff access, and offline player viewing in a clean way.
       </p>
       <div class="note">
         LsEnderChest is designed to stay lightweight and simple for server owners while still supporting more advanced setups through SQLite and MySQL.
@@ -261,32 +288,31 @@
     <section class="section" id="features">
       <h2>Features</h2>
       <ul>
-        <li>Expandable Ender Chest sizes from 1 to 6 rows</li>
-        <li>Permission-based progression for ranks and upgrades</li>
-        <li><code>/lsec</code> to open your own Ender Chest</li>
-        <li><code>/lsec &lt;player&gt;</code> for staff access to player storage</li>
-        <li>SQLite support for easy setup</li>
-        <li>MySQL support for larger or more advanced servers</li>
-        <li>Support for online-mode and offline-mode environments</li>
-        <li>Offline player chest viewing</li>
-        <li>Admin bypass support</li>
+        <li><strong>Expandable storage</strong> – Players can have between 1 and 6 rows depending on their permissions.</li>
+        <li><strong>Rank-based upgrades</strong> – Perfect for survival servers that use permissions or ranks to reward players with additional storage.</li>
+        <li><strong>Staff inspection tools</strong> – Administrators can open and inspect another player's Ender Chest for moderation, support, or item recovery cases.</li>
+        <li><strong>Offline player support</strong> – Staff can view the Ender Chests of players even when they are offline.</li>
+        <li><strong>Flexible database storage</strong> – Supports both SQLite and MySQL for different server environments.</li>
+        <li><strong>Lightweight architecture</strong> – Designed to run efficiently without adding unnecessary load to your server.</li>
+        <li><strong>Vanilla replacement</strong> – Replaces the standard Ender Chest flow with the plugin system for better control and customization.</li>
+        <li><strong>Offline-mode support</strong> – Can be used on both online-mode and offline-mode servers where supported by your setup.</li>
       </ul>
     </section>
 
     <section class="section" id="commands">
       <h2>Commands</h2>
       <p>
-        LsEnderChest keeps commands intentionally small and easy to remember.
+        LsEnderChest keeps commands intentionally small and easy to remember so players and staff can use it without needing to learn a complex command system.
       </p>
 
       <h3>/lsec</h3>
       <p>
-        Opens your own Ender Chest using the custom storage system. The size of the inventory depends on the highest row permission the player has.
+        Opens your personal Ender Chest using the plugin’s custom storage system. The inventory size will automatically adjust depending on the highest row permission the player has been granted.
       </p>
 
       <h3>/lsec &lt;player&gt;</h3>
       <p>
-        Opens another player’s Ender Chest. This is meant for administrators or staff members who need to inspect inventories, help players, or moderate storage abuse.
+        Opens the Ender Chest belonging to another player. This command is intended for administrators and moderators who need to inspect, verify, or manage a player's stored items.
       </p>
 
       <div class="code">
@@ -298,7 +324,7 @@
     <section class="section" id="permissions">
       <h2>Permissions</h2>
       <p>
-        Permissions control both access and storage size. This lets you easily connect the plugin to rank systems through LuckPerms or any other permission manager.
+        Permissions control both access and storage size. This makes the plugin very easy to integrate with rank systems, store packages, or progression-based permission setups using plugins such as LuckPerms.
       </p>
 
       <div class="mini-grid">
@@ -314,18 +340,18 @@
         <div class="mini-card">
           <h3>Row Permissions</h3>
           <ul>
-            <li><strong>enderchest.rows.1</strong></li>
-            <li><strong>enderchest.rows.2</strong></li>
-            <li><strong>enderchest.rows.3</strong></li>
-            <li><strong>enderchest.rows.4</strong></li>
-            <li><strong>enderchest.rows.5</strong></li>
-            <li><strong>enderchest.rows.6</strong></li>
+            <li><strong>enderchest.rows.1</strong> — 1 row</li>
+            <li><strong>enderchest.rows.2</strong> — 2 rows</li>
+            <li><strong>enderchest.rows.3</strong> — 3 rows</li>
+            <li><strong>enderchest.rows.4</strong> — 4 rows</li>
+            <li><strong>enderchest.rows.5</strong> — 5 rows</li>
+            <li><strong>enderchest.rows.6</strong> — 6 rows</li>
           </ul>
         </div>
       </div>
 
       <p style="margin-top:16px;">
-        The plugin should use the highest matching row permission for the player, so you can safely give higher ranks larger storage without needing separate command aliases or multiple plugin instances.
+        In practice, you would usually assign these row permissions to ranks. For example, default players may get 1 or 2 rows, while VIP or higher tiers receive larger Ender Chests.
       </p>
     </section>
 
@@ -342,7 +368,7 @@
 
       <h3>MySQL</h3>
       <p>
-        MySQL is better suited for larger environments or networks that prefer dedicated database infrastructure. It is also the stronger option when you want more control over data storage outside the local plugin folder.
+        MySQL is better suited for larger environments or networks that prefer dedicated database infrastructure. It is also a stronger option when you want your storage managed outside the local server files.
       </p>
 
       <h3>Why database-backed storage matters</h3>
@@ -350,20 +376,20 @@
         <li>Supports non-vanilla inventory sizes</li>
         <li>Makes offline player data easier to manage</li>
         <li>Keeps storage separate from Mojang’s default Ender Chest handling</li>
-        <li>Helps staff open saved data directly through the plugin</li>
+        <li>Allows staff tools to access saved chest data more reliably</li>
       </ul>
     </section>
 
-    <section class="section">
-      <h2>How the plugin is useful on real servers</h2>
+    <section class="section" id="use-cases">
+      <h2>Practical Use Cases</h2>
       <p>
-        LsEnderChest is especially useful when you want storage to be part of progression or monetization without making the system confusing for players.
+        LsEnderChest works especially well on servers where storage is part of progression, monetization, or moderation.
       </p>
       <ul>
-        <li>Give default players 1 or 2 rows</li>
-        <li>Give higher ranks more rows as a perk</li>
-        <li>Let staff inspect player storage during support cases</li>
-        <li>Use offline access to review inventories even when the player is not online</li>
+        <li>Give default players a small Ender Chest and higher ranks more space.</li>
+        <li>Offer extra rows as a store perk without creating separate storage plugins.</li>
+        <li>Allow staff to inspect chests during support tickets or moderation cases.</li>
+        <li>Review offline player storage when handling reports, suspicious activity, or recovery requests.</li>
       </ul>
     </section>
 
@@ -384,19 +410,23 @@
         <li><strong>Minecraft version:</strong> 1.21.x</li>
         <li><strong>Java version:</strong> Java 21</li>
       </ul>
+      <p style="margin-top:14px;">
+        The plugin is intended for modern Paper servers and is built around current API expectations for the 1.21.x version range.
+      </p>
     </section>
 
     <section class="section" id="installation">
       <h2>Installation</h2>
       <p>
-        Installing LsEnderChest is straightforward.
+        Installing LsEnderChest is straightforward and only takes a few steps.
       </p>
       <div class="code">
         <pre>1. Download the plugin jar
 2. Place it in your server's plugins folder
 3. Start or restart the server
 4. Edit config.yml if needed
-5. Assign row permissions to your ranks</pre>
+5. Assign row permissions to your ranks
+6. Test /lsec in-game to confirm everything works</pre>
       </div>
     </section>
 
