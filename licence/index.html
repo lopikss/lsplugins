@@ -175,10 +175,12 @@
     .card:hover,
     .faq-item:hover,
     .table-wrap:hover,
-    .license:hover {
+    .license:hover,
+    .tag:hover {
       transform: translateY(-2px);
       border-color: var(--line-strong);
       box-shadow: var(--glow);
+      text-decoration: none;
     }
 
     .hero {
@@ -376,6 +378,12 @@
       font-size: 0.92rem;
     }
 
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
     .eyebrow {
       display: inline-block;
       margin-bottom: 8px;
@@ -566,7 +574,7 @@
       .faq-answer { padding: 0 18px 18px; }
       .wrap { padding-top: 18px; }
       .topbar { padding: 12px; }
-      h1 { font-size: 2.1rem; }
+      h1 { font-size: 1.8rem; }
       th, td { padding: 12px 14px; }
     }
   </style>
@@ -592,7 +600,7 @@
 
     <section class="hero">
       <div class="badge">Ls Plugins • Open Source License • Minecraft Plugins</div>
-      <h1>Use it, learn from it, fork it, and share it — just do not sell it, hide credit, or harm the brand.</h1>
+      <h1>Ls Plugins License</h1>
       <p class="subtitle">
         This license applies to all free and premium <strong>Ls Plugins</strong>. Free plugins may be used on any Minecraft server, forked, shared, and improved with proper credit. Premium plugins are licensed to the individual customer who purchased them and may not be shared beyond that customer unless written permission is given.
       </p>
@@ -693,7 +701,8 @@
             <li><span class="ok">✔</span><span>Share free plugins with friends, staff, other server owners, and hosting clients.</span></li>
             <li><span class="ok">✔</span><span>Edit the source code for personal use, internal fixes, custom behavior, and private builds.</span></li>
             <li><span class="ok">✔</span><span>Create forks of free plugins and distribute them with clear credit to the original Ls Plugins project and original author attribution.</span></li>
-            <li><span class="ok">✔</span><span>Read, learn from, and study the source code, including reusing ideas and patterns without copying protected code into other projects.</span></li>
+            <li><span class="ok">✔</span><span>Read, learn from, and study the source code, including reusing ideas and patterns without copying large portions into other projects.</span></li>
+            <li><span class="ok">✔</span><span>Reuse small snippets or patterns for learning or inspiration.</span></li>
             <li><span class="ok">✔</span><span>Sell installation, setup, and configuration services around the plugin.</span></li>
             <li><span class="ok">✔</span><span>Accept and submit contributions or pull requests, which may be incorporated into the project under this license.</span></li>
           </ul>
@@ -744,7 +753,7 @@
           <ul class="mini-list">
             <li><span class="no">✖</span><span>Remove or hide clear credit to the original Ls Plugins source when redistributing free forks.</span></li>
             <li><span class="no">✖</span><span>Claim that you created the original plugin.</span></li>
-            <li><span class="no">✖</span><span>Copy protected code into another plugin and present it as your own work.</span></li>
+            <li><span class="no">✖</span><span>Copy large portions of the plugin into another plugin and present it as your own work.</span></li>
           </ul>
         </section>
 
@@ -795,6 +804,11 @@
               <td>Credit must remain clear and the fork must stay compliant with this license.</td>
             </tr>
             <tr>
+              <td>Reuse small snippets or patterns from the source</td>
+              <td><span class="ok">Allowed</span></td>
+              <td>Small bits for learning or inspiration are allowed.</td>
+            </tr>
+            <tr>
               <td>Sell the plugin, a modified copy, or access to it</td>
               <td><span class="no">Not allowed</span></td>
               <td>The plugin itself may not become the thing being sold.</td>
@@ -834,19 +848,20 @@
         <section class="notice">
           <span class="eyebrow">Source code policy</span>
           <h2>Open source, but not a free-for-all</h2>
-          <p class="muted">Source is published for transparency, education, contribution, and forking. That does not mean people can remove credit, take protected code without attribution, or commercialize the plugin itself.</p>
+          <p class="muted">Source is published for transparency, education, contribution, and forking. That does not mean people can remove credit, take large parts of the plugin without attribution, or commercialize the plugin itself.</p>
           <ul class="mini-list">
             <li><span class="ok">✔</span><span>Reading and learning from the code is encouraged.</span></li>
             <li><span class="ok">✔</span><span>Pull requests and community improvements are welcome.</span></li>
             <li><span class="ok">✔</span><span>Free forks can be shared if they remain properly credited.</span></li>
-            <li><span class="no">✖</span><span>Code may not be copied into another plugin and presented as original work.</span></li>
+            <li><span class="ok">✔</span><span>Small snippets or patterns may be reused for learning or inspiration.</span></li>
+            <li><span class="no">✖</span><span>Large portions of the plugin may not be copied into another plugin and presented as original work.</span></li>
           </ul>
         </section>
 
         <section class="notice">
           <span class="eyebrow">Brand protection</span>
           <h2>Forks stay allowed, but harmful forks do not stay protected</h2>
-          <p class="muted">You wanted forks to be possible, but you also wanted the ability to step in if a public fork becomes deceptive, abusive, low-effort rebranding, or something that hurts your reputation.</p>
+          <p class="muted">Forks are allowed, but you still keep the ability to step in if a public fork becomes deceptive, abusive, low-effort rebranding, or something that hurts your reputation.</p>
           <ul class="mini-list">
             <li><span class="maybe">!</span><span>Fork distribution rights can be terminated if the fork materially harms the Ls Plugins brand, falsely suggests official status, or acts in bad faith.</span></li>
             <li><span class="maybe">!</span><span>Written permission can always override the default rules.</span></li>
@@ -885,7 +900,7 @@
         </section>
         <section class="card">
           <h3>“Can I copy some code into my own plugin?”</h3>
-          <p class="muted">Learning from the code is allowed. Copying small snippets for learning or inspiration is allowed. Copying large portions of the plugin and presenting them as your own original work is not allowed.</p>
+          <p class="muted">Yes. Copying small snippets for learning or inspiration is allowed. Copying large portions of the plugin and presenting them as your own original work is not allowed.</p>
         </section>
       </div>
     </section>
@@ -992,6 +1007,7 @@ Subject to compliance with this license, permission is granted to any person or 
 - modify Free Plugins for personal use, internal use, fixes, customization, and private builds;
 - create, publish, and distribute Forks of Free Plugins;
 - study, review, and learn from the source code;
+- reuse small snippets or patterns from the source for learning or inspiration;
 - submit pull requests, patches, and other contributions.
 
 4. Conditions for Free Plugin Redistribution and Forks
@@ -1020,7 +1036,8 @@ For clarity:
 6. Source Code Use
 Source code is made available for transparency, education, collaboration, and forking.
 You may learn from the code and contribute to the project.
-You may reuse small snippets or patterns from the code for learning or inspiration. Large portions of the plugin may not be copied into another project and presented as your own original work.
+You may reuse small snippets or patterns from the code for learning or inspiration.
+Large portions of the plugin may not be copied into another project and presented as your own original work.
 Ideas, concepts, and general approaches are not restricted merely because they are similar.
 
 7. Contributions
@@ -1080,11 +1097,11 @@ End of License</pre>
           <span class="eyebrow">Official sources</span>
           <h2>Official sources</h2>
           <div class="tag-row">
-            <a class="tag" href="https://github.com" target="_blank">GitHub</a>
-            <a class="tag" href="https://modrinth.com" target="_blank">Modrinth</a>
-            <a class="tag" href="https://lsplugins.com" target="_blank">LsPlugins.com</a>
-            <a class="tag" href="https://www.spigotmc.org" target="_blank">SpigotMC</a>
-            <a class="tag" href="https://builtbybit.com" target="_blank">BuildByBit</a>
+            <a class="tag" href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="tag" href="https://modrinth.com" target="_blank" rel="noopener noreferrer">Modrinth</a>
+            <a class="tag" href="https://lsplugins.com" target="_blank" rel="noopener noreferrer">LsPlugins.com</a>
+            <a class="tag" href="https://www.spigotmc.org" target="_blank" rel="noopener noreferrer">SpigotMC</a>
+            <a class="tag" href="https://builtbybit.com" target="_blank" rel="noopener noreferrer">BuildByBit</a>
           </div>
         </section>
       </div>
@@ -1098,6 +1115,7 @@ End of License</pre>
   <script>
     const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('lsplugins-theme');
+
     if (savedTheme === 'light') {
       document.body.classList.add('light');
       themeToggle.textContent = 'Dark mode';
