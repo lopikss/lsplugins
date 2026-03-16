@@ -7,45 +7,201 @@
   <style>
     :root {
       --bg: #0b1020;
-      --bg2: #111933;
+      --bg2: #121733;
+      --bg3: #171338;
       --card: rgba(255,255,255,0.08);
+      --card-strong: rgba(255,255,255,0.11);
       --line: rgba(255,255,255,0.12);
+      --line-strong: rgba(255,255,255,0.18);
       --text: #eef2ff;
       --muted: #b8c0e0;
-      --accent: #7c9cff;
-      --accent2: #3dd9c5;
+      --accent: #9d7cff;
+      --accent2: #c084fc;
+      --accent3: #7c9cff;
       --good: #7ee787;
+      --warn: #ffd166;
       --bad: #ff7b72;
       --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --glow: 0 0 0 1px rgba(192,132,252,0.16), 0 0 40px rgba(157,124,255,0.18);
+      --hero-glow: radial-gradient(circle at top left, rgba(157,124,255,0.22), transparent 35%), radial-gradient(circle at top right, rgba(192,132,252,0.16), transparent 30%);
+    }
+
+    body.light {
+      --bg: #f7f7ff;
+      --bg2: #eeefff;
+      --bg3: #ece7ff;
+      --card: rgba(255,255,255,0.78);
+      --card-strong: rgba(255,255,255,0.94);
+      --line: rgba(48, 33, 86, 0.10);
+      --line-strong: rgba(48, 33, 86, 0.16);
+      --text: #17162a;
+      --muted: #5f6483;
+      --accent: #7b4dff;
+      --accent2: #9c4dff;
+      --accent3: #5c6cff;
+      --good: #0c8b44;
+      --warn: #a86d00;
+      --bad: #cf2f2f;
+      --shadow: 0 20px 50px rgba(71, 43, 139, 0.10);
+      --glow: 0 0 0 1px rgba(123,77,255,0.08), 0 0 30px rgba(123,77,255,0.08);
+      --hero-glow: radial-gradient(circle at top left, rgba(123,77,255,0.12), transparent 35%), radial-gradient(circle at top right, rgba(156,77,255,0.10), transparent 28%);
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(124,156,255,0.18), transparent 35%),
-        radial-gradient(circle at top right, rgba(61,217,197,0.14), transparent 30%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+        var(--hero-glow),
+        linear-gradient(180deg, var(--bg), var(--bg2) 45%, var(--bg3));
       min-height: 100vh;
       line-height: 1.65;
+      transition: background .25s ease, color .25s ease;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.28), transparent 85%);
+      opacity: .35;
     }
 
     .wrap {
-      max-width: 980px;
+      max-width: 1160px;
       margin: 0 auto;
-      padding: 48px 20px 64px;
+      padding: 28px 20px 72px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 14px;
+      z-index: 30;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      margin-bottom: 22px;
+      border: 1px solid var(--line);
+      background: rgba(10, 13, 24, 0.58);
+      backdrop-filter: blur(16px);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    body.light .topbar {
+      background: rgba(255,255,255,0.72);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      border: 1px solid var(--line-strong);
+      background: linear-gradient(135deg, rgba(157,124,255,0.24), rgba(124,156,255,0.18));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      box-shadow: var(--glow);
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a,
+    .nav button,
+    .btn,
+    .copy-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      text-decoration: none;
+      padding: 9px 12px;
+      border-radius: 12px;
+      font: inherit;
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+    .nav a:hover,
+    .nav button:hover,
+    .btn:hover,
+    .copy-btn:hover,
+    .card:hover,
+    .faq-item:hover,
+    .table-wrap:hover,
+    .license:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+      box-shadow: var(--glow);
     }
 
     .hero {
-      background: linear-gradient(135deg, rgba(124,156,255,0.18), rgba(61,217,197,0.10));
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(157,124,255,0.18), rgba(124,156,255,0.10));
       border: 1px solid var(--line);
       border-radius: 28px;
-      padding: 36px;
+      padding: 34px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(12px);
+      isolation: isolate;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -120px -120px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(192,132,252,0.18), transparent 70%);
+      z-index: -1;
     }
 
     .badge {
@@ -63,38 +219,108 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(2.2rem, 4vw, 3.4rem);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
+      font-size: clamp(2.35rem, 4.4vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      max-width: 820px;
     }
 
     .subtitle {
       color: var(--muted);
-      font-size: 1.06rem;
-      max-width: 720px;
+      font-size: 1.08rem;
+      max-width: 800px;
       margin: 16px 0 0;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-      margin-top: 28px;
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
     }
 
-    .card {
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(157,124,255,0.24), rgba(192,132,252,0.18));
+      border-color: rgba(192,132,252,0.28);
+      box-shadow: var(--glow);
+    }
+
+    .meta-grid,
+    .grid,
+    .summary-grid,
+    .examples-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .meta-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .grid { grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+    .summary-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .examples-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+    .card,
+    .table-wrap,
+    .license,
+    .faq-item,
+    .notice,
+    .toc {
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 22px;
       padding: 22px;
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
     }
 
-    h2 {
-      margin: 0 0 14px;
-      font-size: 1.2rem;
+    .card strong,
+    .notice strong { color: var(--text); }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      font-size: 1rem;
+      flex: 0 0 auto;
+    }
+
+    h2, h3 {
+      margin: 0;
       letter-spacing: -0.02em;
+    }
+
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.06rem; }
+
+    .section {
+      margin-top: 26px;
+      scroll-margin-top: 90px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-title p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 760px;
     }
 
     .list {
@@ -105,41 +331,181 @@
       list-style: none;
     }
 
-    .list li {
+    .list li,
+    .mini-list li {
       display: flex;
       gap: 10px;
       align-items: flex-start;
       color: var(--muted);
     }
 
-    .ok { color: var(--good); font-weight: 700; }
-    .no { color: var(--bad); font-weight: 700; }
+    .mini-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
 
-    .section {
-      margin-top: 24px;
+    .ok, .no, .maybe {
+      font-weight: 800;
+      line-height: 1.4;
+      min-width: 18px;
+      display: inline-block;
+    }
+
+    .ok { color: var(--good); }
+    .no { color: var(--bad); }
+    .maybe { color: var(--warn); }
+
+    .pillrow,
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill,
+    .tag {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.06);
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--accent2);
+      font-weight: 700;
+      font-size: 0.86rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .summary-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+      opacity: .75;
+    }
+
+    .muted { color: var(--muted); }
+
+    .table-wrap {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 15px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    th {
+      color: var(--text);
+      font-size: 0.95rem;
+      background: rgba(255,255,255,0.04);
+    }
+
+    td { color: var(--muted); }
+
+    .notice {
+      border-color: rgba(192,132,252,0.22);
+      background: linear-gradient(135deg, rgba(157,124,255,0.11), rgba(255,255,255,0.04));
+    }
+
+    .faq {
+      display: grid;
+      gap: 14px;
+    }
+
+    .faq-item {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: var(--text);
+      border: 0;
+      font: inherit;
+      padding: 18px 22px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .faq-question span:last-child {
+      color: var(--accent2);
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .faq-answer {
+      padding: 0 22px 20px;
+      color: var(--muted);
+      display: none;
+    }
+
+    .faq-item.open .faq-answer { display: block; }
+
+    .license-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
     }
 
     .license {
-      margin-top: 28px;
       background: rgba(7, 12, 24, 0.68);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: var(--shadow);
       overflow: hidden;
+    }
+
+    body.light .license {
+      background: rgba(255,255,255,0.76);
     }
 
     .license pre {
       margin: 0;
       white-space: pre-wrap;
       word-break: break-word;
-      color: #dfe7ff;
-      font-size: 0.98rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.72;
       font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+      max-height: 620px;
+      overflow: auto;
+      padding-right: 8px;
     }
 
     .footer {
-      margin-top: 20px;
+      margin-top: 24px;
       color: var(--muted);
       font-size: 0.95rem;
       text-align: center;
@@ -152,92 +518,631 @@
 
     a:hover { text-decoration: underline; }
 
-    .pillrow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
+    .small {
+      font-size: 0.9rem;
+      color: var(--muted);
     }
 
-    .pill {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.06);
-      padding: 8px 12px;
-      border-radius: 999px;
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+    }
+
+    .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
       color: var(--muted);
-      font-size: 0.92rem;
+      transition: background .18s ease, color .18s ease, border-color .18s ease;
+    }
+
+    .toc a:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--line);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    @media (max-width: 920px) {
+      .two-col { grid-template-columns: 1fr; }
+      .topbar { position: static; }
+      .nav { justify-content: flex-start; }
     }
 
     @media (max-width: 640px) {
-      .hero, .card, .license { padding: 22px; }
-      .wrap { padding-top: 22px; }
+      .hero, .card, .license, .table-wrap, .faq-item, .notice, .toc { padding: 18px; }
+      .faq-item { padding: 0; }
+      .faq-question { padding: 16px 18px; }
+      .faq-answer { padding: 0 18px 18px; }
+      .wrap { padding-top: 18px; }
+      .topbar { padding: 12px; }
+      h1 { font-size: 2.1rem; }
+      th, td { padding: 12px 14px; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark" id="brandMark">LS</div>
+        <div>
+          <div class="brand-title">Ls Plugins License</div>
+          <div class="brand-sub">By lopikss • Friendly summary at the top, formal terms below</div>
+        </div>
+      </div>
+      <div class="nav">
+        <a href="#summary">Summary</a>
+        <a href="#allowed">Allowed</a>
+        <a href="#faq">FAQ</a>
+        <a href="#license-text">License Text</a>
+        <button id="themeToggle" type="button">Light mode</button>
+      </div>
+    </div>
+
     <section class="hero">
-      <div class="badge">Ls Plugins • Source-Available License</div>
-      <h1>Ls Plugins License</h1>
+      <div class="badge">Ls Plugins • Open Source License • Minecraft Plugins</div>
+      <h1>Use it, learn from it, fork it, and share it — just do not sell it, hide credit, or harm the brand.</h1>
       <p class="subtitle">
-        A clean, professional license page for your Minecraft plugins. It clearly explains what server owners may do,
-        what they may not do, and keeps your work protected while still letting people use your plugins.
+        This license applies to all free and premium <strong>Ls Plugins</strong>. Free plugins may be used on any Minecraft server, forked, shared, and improved with proper credit. Premium plugins are licensed to the individual customer who purchased them and may not be shared beyond that customer unless written permission is given.
       </p>
       <div class="pillrow">
-        <span class="pill">Use on personal servers</span>
-        <span class="pill">Use on public servers</span>
-        <span class="pill">No redistribution</span>
-        <span class="pill">No modified forks</span>
+        <span class="pill">Allowed on all servers</span>
+        <span class="pill">Commercial servers allowed</span>
+        <span class="pill">Forks allowed with credit</span>
+        <span class="pill">Open source friendly</span>
+        <span class="pill">No reselling plugins</span>
+        <span class="pill">Premium = single customer license</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn primary" href="#license-text">Read full license</a>
+        <a class="btn" href="#contact">Ask permission / contact</a>
+      </div>
+      <div class="meta-grid">
+        <div class="card summary-card">
+          <span class="eyebrow">License date</span>
+          <h3>License 2026-03-16</h3>
+          <p class="muted">This page uses a clear summary first and stricter legal wording later.</p>
+        </div>
+        <div class="card summary-card">
+          <span class="eyebrow">Scope</span>
+          <h3>All Ls Plugins</h3>
+          <p class="muted">Neutral license for your whole plugin brand, not tied to one project.</p>
+        </div>
+        <div class="card summary-card">
+          <span class="eyebrow">Core rule</span>
+          <h3>Credit must stay clear</h3>
+          <p class="muted">People can use and distribute free plugins and forks, but must not remove authorship or misrepresent origin.</p>
+        </div>
       </div>
     </section>
 
-    <div class="grid section">
-      <section class="card">
-        <h2>You may</h2>
-        <ul class="list">
-          <li><span class="ok">✔</span><span>Use the plugin on personal Minecraft servers.</span></li>
-          <li><span class="ok">✔</span><span>Use the plugin on public Minecraft servers.</span></li>
-          <li><span class="ok">✔</span><span>View the source code for transparency and learning.</span></li>
+    <section class="section" id="summary">
+      <div class="section-title">
+        <div>
+          <h2>Quick summary</h2>
+          <p>This is the fast, friendly explanation. The full license text further down controls if there is ever a conflict.</p>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <section class="card summary-card">
+          <div class="card-head">
+            <div class="icon">✔</div>
+            <div>
+              <h3>Free plugins may be used anywhere</h3>
+            </div>
+          </div>
+          <p class="muted">Personal servers, public servers, paid-access communities, commercial networks, hosting environments, and client setups are all allowed.</p>
+        </section>
+
+        <section class="card summary-card">
+          <div class="card-head">
+            <div class="icon">⑂</div>
+            <div>
+              <h3>Forks and edits are allowed</h3>
+            </div>
+          </div>
+          <p class="muted">People may edit source code, compile private builds, create forks, and distribute free forks as long as credit remains clear and the fork stays compliant with this license.</p>
+        </section>
+
+        <section class="card summary-card">
+          <div class="card-head">
+            <div class="icon">$</div>
+            <div>
+              <h3>Do not sell the plugin</h3>
+            </div>
+          </div>
+          <p class="muted">The plugin itself may not be sold, sublicensed, bundled as a paid plugin product, or redistributed as a paid asset. Monetized servers using the plugin are allowed.</p>
+        </section>
+
+        <section class="card summary-card">
+          <div class="card-head">
+            <div class="icon">★</div>
+            <div>
+              <h3>Premium plugins are different</h3>
+            </div>
+          </div>
+          <p class="muted">Premium plugins are sold to one customer only. They may not be shared, leaked, mirrored, or redistributed beyond that licensed customer unless written permission is given.</p>
+        </section>
+      </div>
+    </section>
+
+    <section class="section two-col" id="allowed">
+      <div>
+        <div class="section-title">
+          <div>
+            <h2>What people may do</h2>
+            <p>These permissions apply to free Ls Plugins unless a plugin page says otherwise.</p>
+          </div>
+        </div>
+        <section class="card">
+          <ul class="list">
+            <li><span class="ok">✔</span><span>Use free plugins on personal, private, public, paid-access, and commercial Minecraft servers.</span></li>
+            <li><span class="ok">✔</span><span>Use the plugin in server templates or client projects, including paid setups, as long as the plugin itself is not being sold as the product.</span></li>
+            <li><span class="ok">✔</span><span>Share free plugins with friends, staff, other server owners, and hosting clients.</span></li>
+            <li><span class="ok">✔</span><span>Edit the source code for personal use, internal fixes, custom behavior, and private builds.</span></li>
+            <li><span class="ok">✔</span><span>Create forks of free plugins and distribute them with clear credit to the original Ls Plugins project and original author attribution.</span></li>
+            <li><span class="ok">✔</span><span>Read, learn from, and study the source code, including reusing ideas and patterns without copying protected code into other projects.</span></li>
+            <li><span class="ok">✔</span><span>Sell installation, setup, and configuration services around the plugin.</span></li>
+            <li><span class="ok">✔</span><span>Accept and submit contributions or pull requests, which may be incorporated into the project under this license.</span></li>
+          </ul>
+        </section>
+      </div>
+
+      <aside class="toc">
+        <h3>On this page</h3>
+        <ul>
+          <li><a href="#summary">Quick summary</a></li>
+          <li><a href="#allowed">What people may do</a></li>
+          <li><a href="#not-allowed">What people may not do</a></li>
+          <li><a href="#commercial">Commercial use</a></li>
+          <li><a href="#source-policy">Source policy</a></li>
+          <li><a href="#examples">Examples</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#license-text">Full license text</a></li>
+          <li><a href="#contact">Contact / permissions</a></li>
         </ul>
-      </section>
+      </aside>
+    </section>
 
-      <section class="card">
-        <h2>You may NOT</h2>
-        <ul class="list">
-          <li><span class="no">✖</span><span>Modify the plugin and redistribute it.</span></li>
-          <li><span class="no">✖</span><span>Publish edited versions or forks.</span></li>
-          <li><span class="no">✖</span><span>Reupload the plugin or source code to other websites.</span></li>
-          <li><span class="no">✖</span><span>Sell, sublicense, or commercially distribute the plugin.</span></li>
-        </ul>
-      </section>
-    </div>
+    <section class="section" id="not-allowed">
+      <div class="section-title">
+        <div>
+          <h2>What people may not do</h2>
+          <p>These are the main restrictions that protect your work, your credit, and your premium products.</p>
+        </div>
+      </div>
+      <div class="grid">
+        <section class="card">
+          <div class="card-head">
+            <div class="icon">✖</div>
+            <div><h3>Reselling and paid redistribution</h3></div>
+          </div>
+          <ul class="mini-list">
+            <li><span class="no">✖</span><span>Sell any free or premium Ls Plugin as a plugin product.</span></li>
+            <li><span class="no">✖</span><span>Bundle the plugin into a paid plugin pack or paid asset bundle.</span></li>
+            <li><span class="no">✖</span><span>Charge money for access to the plugin itself, whether original or modified.</span></li>
+          </ul>
+        </section>
 
-    <section class="license section">
-      <h2>License Text</h2>
-      <pre>Ls Plugins License
-Copyright (c) 2026 lopikss
+        <section class="card">
+          <div class="card-head">
+            <div class="icon">©</div>
+            <div><h3>Credit and authorship abuse</h3></div>
+          </div>
+          <ul class="mini-list">
+            <li><span class="no">✖</span><span>Remove or hide clear credit to the original Ls Plugins source when redistributing free forks.</span></li>
+            <li><span class="no">✖</span><span>Claim that you created the original plugin.</span></li>
+            <li><span class="no">✖</span><span>Copy protected code into another plugin and present it as your own work.</span></li>
+          </ul>
+        </section>
 
-Permission is granted to use this software on personal or public Minecraft servers.
+        <section class="card">
+          <div class="card-head">
+            <div class="icon">🔒</div>
+            <div><h3>Premium sharing</h3></div>
+          </div>
+          <ul class="mini-list">
+            <li><span class="no">✖</span><span>Share, leak, mirror, or redistribute a premium plugin beyond the one licensed customer.</span></li>
+            <li><span class="no">✖</span><span>Provide premium builds to friends, team members outside the license scope, clients, or the public unless written permission exists.</span></li>
+            <li><span class="no">✖</span><span>Upload premium files to public or private download sites for further redistribution.</span></li>
+          </ul>
+        </section>
+      </div>
+    </section>
 
-You may:
-✔ Use the plugin on your server.
-✔ View the source code for transparency and educational purposes.
+    <section class="section" id="commercial">
+      <div class="section-title">
+        <div>
+          <h2>Allowed / not allowed / ask permission</h2>
+          <p>A fast reference table for the most common situations.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Use a free plugin on a public or commercial server</td>
+              <td><span class="ok">Allowed</span></td>
+              <td>Server monetization is fine. The restriction is on selling the plugin, not on running a server that uses it.</td>
+            </tr>
+            <tr>
+              <td>Edit source for your own server and compile a private jar</td>
+              <td><span class="ok">Allowed</span></td>
+              <td>Private customization and internal fixes are fine.</td>
+            </tr>
+            <tr>
+              <td>Publish a free fork on GitHub with clear credit</td>
+              <td><span class="ok">Allowed</span></td>
+              <td>Credit must remain clear and the fork must stay compliant with this license.</td>
+            </tr>
+            <tr>
+              <td>Sell the plugin, a modified copy, or access to it</td>
+              <td><span class="no">Not allowed</span></td>
+              <td>The plugin itself may not become the thing being sold.</td>
+            </tr>
+            <tr>
+              <td>Sell configuration services or setup services</td>
+              <td><span class="ok">Allowed</span></td>
+              <td>Configs and service work are allowed as long as the plugin is not being sold as your own product.</td>
+            </tr>
+            <tr>
+              <td>Resell a configured server package that includes the free plugin</td>
+              <td><span class="ok">Allowed</span></td>
+              <td>Allowed when the value being sold is the setup/configuration and credit stays clear.</td>
+            </tr>
+            <tr>
+              <td>Share a premium plugin purchase with others</td>
+              <td><span class="no">Not allowed</span></td>
+              <td>Premium licenses are single-customer unless written permission says otherwise.</td>
+            </tr>
+            <tr>
+              <td>Use a premium plugin inside the licensed customer’s own environment</td>
+              <td><span class="ok">Allowed</span></td>
+              <td>Use is allowed for the licensed customer, subject to the specific purchase terms.</td>
+            </tr>
+            <tr>
+              <td>Distribute a fork that harms the project’s reputation or falsely implies official endorsement</td>
+              <td><span class="maybe">Revocable</span></td>
+              <td>Distribution rights may be terminated if a fork is harmful, deceptive, abusive, or damaging to the Ls Plugins brand.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-You may NOT:
-✖ Modify the plugin and redistribute it.
-✖ Redistribute the plugin or source code.
-✖ Publish modified versions or forks.
-✖ Reupload the plugin to other platforms or websites.
-✖ Sell, sublicense, or monetize the plugin.
+    <section class="section" id="source-policy">
+      <div class="grid">
+        <section class="notice">
+          <span class="eyebrow">Source code policy</span>
+          <h2>Open source, but not a free-for-all</h2>
+          <p class="muted">Source is published for transparency, education, contribution, and forking. That does not mean people can remove credit, take protected code without attribution, or commercialize the plugin itself.</p>
+          <ul class="mini-list">
+            <li><span class="ok">✔</span><span>Reading and learning from the code is encouraged.</span></li>
+            <li><span class="ok">✔</span><span>Pull requests and community improvements are welcome.</span></li>
+            <li><span class="ok">✔</span><span>Free forks can be shared if they remain properly credited.</span></li>
+            <li><span class="no">✖</span><span>Code may not be copied into another plugin and presented as original work.</span></li>
+          </ul>
+        </section>
 
-The source code is provided for transparency and educational purposes only.
+        <section class="notice">
+          <span class="eyebrow">Brand protection</span>
+          <h2>Forks stay allowed, but harmful forks do not stay protected</h2>
+          <p class="muted">You wanted forks to be possible, but you also wanted the ability to step in if a public fork becomes deceptive, abusive, low-effort rebranding, or something that hurts your reputation.</p>
+          <ul class="mini-list">
+            <li><span class="maybe">!</span><span>Fork distribution rights can be terminated if the fork materially harms the Ls Plugins brand, falsely suggests official status, or acts in bad faith.</span></li>
+            <li><span class="maybe">!</span><span>Written permission can always override the default rules.</span></li>
+          </ul>
+        </section>
+      </div>
+    </section>
 
-All rights reserved.</pre>
+    <section class="section" id="examples">
+      <div class="section-title">
+        <div>
+          <h2>Examples</h2>
+          <p>Real-world examples make the license easier to understand before someone reads the full legal text.</p>
+        </div>
+      </div>
+      <div class="examples-grid">
+        <section class="card">
+          <h3>“Can I use this on my monetized server?”</h3>
+          <p class="muted">Yes. Free Ls Plugins may be used on monetized, public, and commercial Minecraft servers.</p>
+        </section>
+        <section class="card">
+          <h3>“Can I fork it and post the fork?”</h3>
+          <p class="muted">Yes, for free plugins. Keep clear credit, do not misrepresent authorship, and do not turn the fork into a paid plugin product.</p>
+        </section>
+        <section class="card">
+          <h3>“Can I share the premium jar with a friend?”</h3>
+          <p class="muted">No. Premium plugins are licensed to one customer only unless written permission says otherwise.</p>
+        </section>
+        <section class="card">
+          <h3>“Can I sell configs or setup work?”</h3>
+          <p class="muted">Yes. Selling configuration work, setup, and installation services is allowed, but you cannot sell the plugin itself.</p>
+        </section>
+        <section class="card">
+          <h3>“Can I upload the free plugin somewhere else?”</h3>
+          <p class="muted">Yes, but credit must remain clear and it must not be sold or presented as your own original plugin.</p>
+        </section>
+        <section class="card">
+          <h3>“Can I copy some code into my own plugin?”</h3>
+          <p class="muted">Learning from the code is allowed. Copying protected code into another plugin and presenting it as your own is not allowed.</p>
+        </section>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-title">
+        <div>
+          <h2>Frequently asked questions</h2>
+          <p>Friendly answers first. The legal text below remains the final authority.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item open">
+          <button class="faq-question" type="button">
+            <span>Can I use Ls Plugins on any kind of Minecraft server?</span>
+            <span>−</span>
+          </button>
+          <div class="faq-answer">
+            Yes. Free plugins may be used on personal servers, public servers, paid-access communities, and commercial Minecraft server environments.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>Can I edit the plugin for my own use?</span>
+            <span>+</span>
+          </button>
+          <div class="faq-answer">
+            Yes. You may modify the source, make internal fixes, and compile your own build for private or internal use.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>Can I distribute a fork?</span>
+            <span>+</span>
+          </button>
+          <div class="faq-answer">
+            Yes, for free plugins. Keep clear credit to the original Ls Plugins project, do not imply your fork is the original official release, and do not sell the plugin or fork itself.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>Can I make money while using the plugin?</span>
+            <span>+</span>
+          </button>
+          <div class="faq-answer">
+            Yes. You can monetize your server, your setup work, your configs, or your services. You just cannot sell the plugin itself as a paid product unless you have written permission.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>What is different about premium plugins?</span>
+            <span>+</span>
+          </button>
+          <div class="faq-answer">
+            Premium plugins are licensed to one customer only. Unless written permission says otherwise, they cannot be shared, redistributed, leaked, mirrored, or re-sold.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button">
+            <span>What happens if someone violates the license?</span>
+            <span>+</span>
+          </button>
+          <div class="faq-answer">
+            Their rights under the license may automatically terminate. You may also revoke rights for harmful or deceptive forks that damage the Ls Plugins brand or falsely imply endorsement.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="license-text">
+      <div class="license">
+        <div class="license-header">
+          <div>
+            <span class="eyebrow">Full legal text</span>
+            <h2>Ls Plugins License — 2026-03-16</h2>
+            <div class="small">This is the formal license text for all Ls Plugins unless a specific plugin page states additional written terms.</div>
+          </div>
+          <button class="copy-btn" id="copyLicense" type="button">Copy license text</button>
+        </div>
+        <pre id="licensePre">Ls Plugins License
+License Date: 2026-03-16
+Copyright (c) 2026 Ls Plugins
+Maintained by lopikss and contributors
+
+1. Scope
+This license applies to all software, source code, builds, releases, assets, and related materials distributed under the Ls Plugins name, unless a specific project or sale explicitly states different written terms.
+
+2. Definitions
+"Free Plugin" means an Ls Plugins plugin distributed without requiring a paid purchase for the plugin itself.
+"Premium Plugin" means an Ls Plugins plugin distributed only through a paid or otherwise restricted customer license.
+"Fork" means any modified or derivative version of a Free Plugin.
+"Customer" means the individual or legal entity that directly obtained a Premium Plugin license from Ls Plugins.
+
+3. Permission for Free Plugins
+Subject to compliance with this license, permission is granted to any person or entity to:
+- use Free Plugins on personal, private, public, paid-access, and commercial Minecraft servers;
+- share Free Plugins with friends, staff, server owners, clients, and hosting providers;
+- modify Free Plugins for personal use, internal use, fixes, customization, and private builds;
+- create, publish, and distribute Forks of Free Plugins;
+- study, review, and learn from the source code;
+- submit pull requests, patches, and other contributions.
+
+4. Conditions for Free Plugin Redistribution and Forks
+Any redistribution of a Free Plugin or Fork must:
+- keep clear and visible credit to the original Ls Plugins project;
+- not falsely claim original authorship of the underlying plugin;
+- not remove or conceal notices that reasonably identify Ls Plugins as the original source;
+- not imply official status, sponsorship, approval, or endorsement by Ls Plugins unless written permission has been given;
+- remain available in a form that complies with this license.
+
+Redistribution on platforms such as GitHub, Modrinth, LsPlugins.com, SpigotMC, file-sharing services, mirrors, and similar locations is permitted for Free Plugins and Free Plugin Forks, provided the above conditions are met.
+
+5. Commercial Restrictions
+Unless written permission has been granted by Ls Plugins, no person or entity may:
+- sell a Free Plugin, Premium Plugin, or Fork as a plugin product;
+- sublicense the plugin itself;
+- include the plugin itself as a paid standalone digital good;
+- charge for access to the plugin itself, whether original or modified;
+- bundle the plugin into a paid plugin pack or paid software asset collection where the plugin itself forms part of the sold product.
+
+For clarity:
+- monetizing a Minecraft server that uses the plugin is allowed;
+- selling setup, installation, configuration, integration, or related services is allowed;
+- selling server templates or configured setups that include a Free Plugin is allowed, provided the plugin itself is not being sold as the claimed original work of the seller and proper credit remains clear.
+
+6. Source Code Use
+Source code is made available for transparency, education, collaboration, and forking.
+You may learn from the code and contribute to the project.
+You may not copy protected portions of the code into a separate plugin or project and present that copied code as your own original work.
+Ideas, concepts, and general approaches are not restricted merely because they are similar.
+
+7. Contributions
+Unless otherwise agreed in writing, any contribution, pull request, patch, or submitted code intentionally provided to Ls Plugins may be used, modified, relicensed, published, and redistributed by Ls Plugins as part of the project under this license or future versions of it.
+
+8. Premium Plugins
+Premium Plugins are licensed to one Customer only unless a separate written agreement states otherwise.
+A Premium Plugin may be used only by the licensed Customer under the purchase terms provided to that Customer.
+No person may share, leak, mirror, redistribute, resell, sublicense, publish, or otherwise provide a Premium Plugin to any other person or entity beyond the licensed Customer unless Ls Plugins has given prior written permission.
+
+9. Brand Protection and Harmful Forks
+Forks of Free Plugins are generally allowed.
+However, Ls Plugins may terminate or revoke permission to distribute a Fork if Ls Plugins reasonably determines that the Fork:
+- materially harms the reputation or brand of Ls Plugins;
+- is deceptive, abusive, malicious, or intentionally misleading;
+- falsely implies official endorsement or official project status;
+- exists primarily as a bad-faith rebrand, low-effort reputational copy, or harmful impersonation.
+
+10. Termination
+Any rights granted under this license automatically terminate upon violation of this license.
+Upon termination, the violating party must cease use, distribution, and further exercise of licensed rights to the extent required by law and this license.
+Termination of one person’s rights does not terminate the rights of others who remain compliant.
+
+11. No Warranty
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, PERFORMANCE, OR SECURITY.
+
+12. Limitation of Liability
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, LS PLUGINS, ITS AUTHORS, MAINTAINERS, AND CONTRIBUTORS SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES, LOSSES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT, OR OTHERWISE, ARISING FROM OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF OR INABILITY TO USE THE SOFTWARE.
+
+13. Written Permission
+Any exception to this license requires prior written permission from Ls Plugins.
+Permission requests may be sent through the official contact method listed by Ls Plugins.
+
+14. Entire Understanding
+This license is intended to provide a practical, creator-protective framework for use, sharing, contribution, and redistribution of Ls Plugins while preserving credit, preventing unauthorized sales, and protecting premium customer licenses.
+
+15. Contact
+For permissions, exceptions, partnership requests, or commercial questions, contact: Discord @lopikss
+
+End of License</pre>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="grid">
+        <section class="card">
+          <span class="eyebrow">Contact</span>
+          <h2>Need permission for something unusual?</h2>
+          <p class="muted">If your use case does not cleanly fit the license, ask first. Written permission can allow exceptions, special commercial arrangements, or premium use terms.</p>
+          <div class="tag-row">
+            <span class="tag">Discord: @lopikss</span>
+            <span class="tag">Written permission required for exceptions</span>
+          </div>
+        </section>
+
+        <section class="card">
+          <span class="eyebrow">Official sources</span>
+          <h2>Common official / allowed distribution locations</h2>
+          <p class="muted">You said official and commonly accepted locations may include GitHub, Modrinth, LsPlugins.com, SpigotMC, and potentially BuildByBit in the future.</p>
+          <div class="tag-row">
+            <span class="tag">GitHub</span>
+            <span class="tag">Modrinth</span>
+            <span class="tag">LsPlugins.com</span>
+            <span class="tag">SpigotMC</span>
+            <span class="tag">BuildByBit</span>
+          </div>
+        </section>
+      </div>
     </section>
 
     <p class="footer">
-      Replace the year or name if needed, then upload this as your license page or convert the text into a plain <strong>LICENSE</strong> file.
+      Friendly summary above. Formal terms below. Keep credit clear, keep forks honest, and do not redistribute premium plugins beyond the licensed customer.
     </p>
   </div>
+
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('lsplugins-theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light');
+      themeToggle.textContent = 'Dark mode';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      const isLight = document.body.classList.contains('light');
+      localStorage.setItem('lsplugins-theme', isLight ? 'light' : 'dark');
+      themeToggle.textContent = isLight ? 'Dark mode' : 'Light mode';
+    });
+
+    document.querySelectorAll('.faq-question').forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        item.classList.toggle('open');
+        button.querySelector('span:last-child').textContent = isOpen ? '+' : '−';
+      });
+    });
+
+    document.getElementById('copyLicense').addEventListener('click', async () => {
+      const text = document.getElementById('licensePre').innerText;
+      const button = document.getElementById('copyLicense');
+      try {
+        await navigator.clipboard.writeText(text);
+        const old = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(() => button.textContent = old, 1600);
+      } catch {
+        button.textContent = 'Copy failed';
+        setTimeout(() => button.textContent = 'Copy license text', 1600);
+      }
+    });
+
+    // Replace this with your actual logo file path, e.g. ./logo.png or /assets/logo.png
+    const logoPath = 'logo.png';
+    const img = new Image();
+    img.onload = () => {
+      const mark = document.getElementById('brandMark');
+      mark.innerHTML = '';
+      mark.appendChild(img);
+    };
+    img.src = logoPath;
+  </script>
 </body>
 </html>
