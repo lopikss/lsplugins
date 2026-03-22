@@ -28,12 +28,12 @@
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html, body {
+      margin: 0;
+      min-height: 100%;
     }
 
     body {
-      margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
       background:
@@ -53,6 +53,14 @@
       display: block;
     }
 
+    code {
+      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
+      font-size: 0.95em;
+      background: rgba(255,255,255,0.05);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+
     .layout {
       min-height: 100vh;
       display: grid;
@@ -64,10 +72,11 @@
       top: 0;
       height: 100vh;
       border-right: 1px solid var(--line);
-      background: rgba(11, 15, 20, 0.88);
+      background: rgba(11, 15, 20, 0.90);
       backdrop-filter: blur(14px);
       padding: 18px 16px 20px;
       overflow-y: auto;
+      z-index: 100;
     }
 
     .brand {
@@ -124,7 +133,9 @@
       gap: 4px;
     }
 
-    .nav a {
+    .nav button {
+      width: 100%;
+      text-align: left;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -132,15 +143,25 @@
       padding: 10px 12px;
       border-radius: 12px;
       border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
       transition: 0.18s ease;
       font-size: 0.95rem;
+      font-family: inherit;
     }
 
-    .nav a:hover,
-    .nav a.active {
+    .nav button:hover,
+    .nav button.active {
       background: rgba(255,255,255,0.06);
       border-color: var(--line);
       color: white;
+    }
+
+    .nav-empty {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      display: none;
     }
 
     .content-wrap {
@@ -158,7 +179,7 @@
       gap: 18px;
       padding: 0 28px;
       border-bottom: 1px solid var(--line);
-      background: rgba(11, 15, 20, 0.82);
+      background: rgba(11, 15, 20, 0.84);
       backdrop-filter: blur(14px);
     }
 
@@ -203,6 +224,7 @@
       background: rgba(255,255,255,0.05);
       color: var(--text);
       transition: 0.18s ease;
+      text-decoration: none;
     }
 
     .btn:hover {
@@ -227,6 +249,14 @@
       margin: 0 auto;
     }
 
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
     .hero {
       background: linear-gradient(135deg, rgba(77,180,255,0.12), rgba(125,140,255,0.08));
       border: 1px solid var(--line);
@@ -246,6 +276,13 @@
       height: 220px;
       background: radial-gradient(circle, rgba(77,180,255,0.24), transparent 60%);
       pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 18px;
+      align-items: stretch;
     }
 
     .eyebrow {
@@ -278,25 +315,38 @@
       margin-top: 22px;
     }
 
-    .hero-grid {
+    .quick-stats {
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 18px;
-      align-items: stretch;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 20px;
     }
 
-    .panel,
+    .stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
     .doc-section {
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--line);
       border-radius: 22px;
       box-shadow: var(--shadow);
-    }
-
-    .doc-section {
       padding: 28px;
       margin-bottom: 18px;
-      scroll-margin-top: 94px;
     }
 
     .doc-section h3 {
@@ -324,31 +374,6 @@
 
     .doc-section li + li {
       margin-top: 9px;
-    }
-
-    .quick-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 20px;
-    }
-
-    .stat {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.1rem;
-      margin-bottom: 4px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.92rem;
     }
 
     .card-grid {
@@ -468,6 +493,61 @@
       text-align: center;
     }
 
+    .search-results {
+      display: none;
+      margin-bottom: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .search-results.visible {
+      display: block;
+    }
+
+    .search-results h3 {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+    }
+
+    .search-result-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .search-result {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .search-result:hover {
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .search-result strong {
+      display: block;
+      margin-bottom: 4px;
+      color: white;
+    }
+
+    .search-result span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    mark {
+      background: rgba(77,180,255,0.18);
+      color: white;
+      padding: 0 2px;
+      border-radius: 4px;
+    }
+
     .mobile-nav-toggle {
       display: none;
     }
@@ -518,7 +598,7 @@
 
     @media (max-width: 700px) {
       .search {
-        display: none;
+        max-width: none;
       }
 
       .topbar {
@@ -552,42 +632,38 @@
       <div class="nav-group">
         <div class="nav-label">Getting Started</div>
         <nav class="nav">
-          <a href="#overview">Overview</a>
-          <a href="#downloads">Download</a>
-          <a href="#installation">Installation</a>
-          <a href="#compatibility">Compatibility</a>
+          <button data-page="overview" class="active">Overview</button>
+          <button data-page="downloads">Download</button>
+          <button data-page="installation">Installation</button>
+          <button data-page="compatibility">Compatibility</button>
         </nav>
       </div>
 
       <div class="nav-group">
         <div class="nav-label">Documentation</div>
         <nav class="nav">
-          <a href="#features">Features</a>
-          <a href="#commands">Commands</a>
-          <a href="#permissions">Permissions</a>
-          <a href="#storage">Storage</a>
-          <a href="#config-guide">Config Guide</a>
-          <a href="#converter">Converter</a>
+          <button data-page="features">Features</button>
+          <button data-page="commands">Commands</button>
+          <button data-page="permissions">Permissions</button>
+          <button data-page="storage">Storage</button>
+          <button data-page="config-guide">Config Guide</button>
+          <button data-page="converter">Converter</button>
+          <button data-page="preview">Preview</button>
+          <button data-page="use-cases">Use Cases</button>
         </nav>
       </div>
 
-      <div class="nav-group">
-        <div class="nav-label">More</div>
-        <nav class="nav">
-          <a href="#preview">Preview</a>
-          <a href="#use-cases">Use Cases</a>
-        </nav>
-      </div>
+      <div class="nav-empty" id="navEmpty">No matching tabs found.</div>
     </aside>
 
     <div class="content-wrap">
       <header class="topbar">
-        <div style="display:flex; gap:10px; align-items:center;">
+        <div style="display:flex; gap:10px; align-items:center; width:100%;">
           <button class="btn mobile-nav-toggle" id="menuBtn">☰ Menu</button>
-          <div class="search">
+          <label class="search">
             <span>🔎</span>
-            <input type="text" placeholder="Browse the docs..." />
-          </div>
+            <input type="text" id="searchInput" placeholder="Search docs, tabs, commands, permissions..." />
+          </label>
         </div>
 
         <div class="top-actions">
@@ -597,266 +673,280 @@
       </header>
 
       <main class="main">
-        <section class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Ls Plugins</div>
-              <h2>LsEnderChest</h2>
-              <p>
-                A modern and lightweight Ender Chest plugin for Paper 1.21.x servers. LsEnderChest replaces the vanilla Ender Chest with a permission-based expandable storage system, letting you give players 1–6 rows depending on rank, perks, or progression.
-              </p>
-              <p>
-                It is built to stay simple, fast, and configurable while supporting SQLite, MySQL, offline player access, read-only staff viewing, advanced item restrictions, and a dual logging system.
-              </p>
+        <section class="search-results" id="searchResults">
+          <h3>Search Results</h3>
+          <div class="search-result-list" id="searchResultList"></div>
+        </section>
 
-              <div class="hero-buttons">
-                <a class="btn btn-primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">⬇ Download on Modrinth</a>
-                <a class="btn" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">View Source</a>
-                <a class="btn" href="#config-guide">Open Config Guide</a>
-              </div>
+        <section class="page active" id="page-overview" data-title="Overview" data-keywords="overview home intro wiki docs lsenderchest ender chest plugin">
+          <section class="hero">
+            <div class="hero-grid">
+              <div>
+                <div class="eyebrow">Ls Plugins</div>
+                <h2>LsEnderChest</h2>
+                <p>
+                  A modern and lightweight Ender Chest plugin for Paper 1.21.x servers. LsEnderChest replaces the vanilla Ender Chest with a permission-based expandable storage system, letting you give players 1–6 rows depending on rank, perks, or progression.
+                </p>
+                <p>
+                  It is built to stay simple, fast, and configurable while supporting SQLite, MySQL, offline player access, read-only staff viewing, advanced item restrictions, and a dual logging system.
+                </p>
 
-              <div class="quick-stats">
-                <div class="stat">
-                  <strong>1–6 Rows</strong>
-                  <span>Permission-based storage sizes</span>
+                <div class="hero-buttons">
+                  <a class="btn btn-primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">⬇ Download on Modrinth</a>
+                  <a class="btn" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">View Source</a>
+                  <button class="btn" data-open-page="config-guide" type="button">Open Config Guide</button>
                 </div>
-                <div class="stat">
-                  <strong>SQLite + MySQL</strong>
-                  <span>Flexible storage backends</span>
+
+                <div class="quick-stats">
+                  <div class="stat">
+                    <strong>1–6 Rows</strong>
+                    <span>Permission-based storage sizes</span>
+                  </div>
+                  <div class="stat">
+                    <strong>SQLite + MySQL</strong>
+                    <span>Flexible storage backends</span>
+                  </div>
+                  <div class="stat">
+                    <strong>Paper 1.21.x</strong>
+                    <span>Built for modern servers</span>
+                  </div>
                 </div>
-                <div class="stat">
-                  <strong>Paper 1.21.x</strong>
-                  <span>Built for modern servers</span>
+              </div>
+
+              <div class="preview-box">
+                <img src="https://raw.githubusercontent.com/lopikss/LsEnderChest/refs/heads/main/images/echest.png" alt="LsEnderChest preview">
+              </div>
+            </div>
+          </section>
+
+          <section class="doc-section">
+            <h3>Overview</h3>
+            <p>
+              Vanilla Minecraft limits Ender Chests to a fixed size. LsEnderChest replaces that behavior with a custom storage system that lets you decide how many rows a player should have based on permissions.
+            </p>
+            <p>
+              This makes it ideal for survival servers, donor ranks, store perks, progression systems, and moderation tools. Players can have anywhere from <strong>1 to 6 rows</strong>, while staff can inspect or view other players’ storage when needed.
+            </p>
+            <div class="callout">
+              LsEnderChest is designed to stay lightweight and easy to manage while still covering the features most servers actually need.
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-downloads" data-title="Download" data-keywords="download modrinth github releases jar plugin">
+          <section class="doc-section">
+            <h3>Download</h3>
+            <p>Download the latest version of LsEnderChest or browse the source code and releases.</p>
+
+            <div class="card-grid">
+              <div class="card">
+                <h4>Main Plugin</h4>
+                <p>Get the latest public release of LsEnderChest.</p>
+                <div class="pill-row">
+                  <a class="btn btn-primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">Download Plugin</a>
+                  <a class="btn" href="https://github.com/lopikss/LsEnderChest/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>
+                </div>
+              </div>
+
+              <div class="card">
+                <h4>Source Code</h4>
+                <p>Browse the repository, changelog, and code.</p>
+                <div class="pill-row">
+                  <a class="btn" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">Open Repository</a>
                 </div>
               </div>
             </div>
+          </section>
+        </section>
 
-            <div class="preview-box">
-              <img src="https://raw.githubusercontent.com/lopikss/LsEnderChest/refs/heads/main/images/echest.png" alt="LsEnderChest preview">
+        <section class="page" id="page-features" data-title="Features" data-keywords="features expandable storage rows async saving logging restrictions offline players mysql sqlite">
+          <section class="doc-section">
+            <h3>Features</h3>
+            <div class="card-grid">
+              <div class="card">
+                <h4>Expandable Ender Chests</h4>
+                <p>Players can have between 1 and 6 rows depending on their permissions.</p>
+              </div>
+
+              <div class="card">
+                <h4>Staff Access</h4>
+                <p>Use <code>/lsec &lt;player&gt;</code> to view or edit another player’s chest depending on permissions.</p>
+              </div>
+
+              <div class="card">
+                <h4>Advanced Item Restrictions</h4>
+                <p>Restrict items by material, lore, and NBT with blacklist or whitelist support.</p>
+              </div>
+
+              <div class="card">
+                <h4>Restriction Bypass Permission</h4>
+                <p>Give trusted players or staff a permission to bypass blocked item restrictions.</p>
+              </div>
+
+              <div class="card">
+                <h4>Async Saving</h4>
+                <p>Chest data saves asynchronously to reduce lag when inventories are closed.</p>
+              </div>
+
+              <div class="card">
+                <h4>Dual Logging System</h4>
+                <p>Includes a clean simple log and a detailed audit log for staff investigations.</p>
+              </div>
+
+              <div class="card">
+                <h4>Offline Player Support</h4>
+                <p>Staff can open the Ender Chests of players even when they are offline.</p>
+              </div>
+
+              <div class="card">
+                <h4>SQLite &amp; MySQL</h4>
+                <p>Choose local database storage or an external database setup depending on your server.</p>
+              </div>
             </div>
-          </div>
+          </section>
         </section>
 
-        <section class="doc-section" id="overview">
-          <h3>Overview</h3>
-          <p>
-            Vanilla Minecraft limits Ender Chests to a fixed size. LsEnderChest replaces that behavior with a custom storage system that lets you decide how many rows a player should have based on permissions.
-          </p>
-          <p>
-            This makes it ideal for survival servers, donor ranks, store perks, progression systems, and moderation tools. Players can have anywhere from <strong>1 to 6 rows</strong>, while staff can inspect or view other players’ storage when needed.
-          </p>
-          <div class="callout">
-            LsEnderChest is designed to stay lightweight and easy to manage while still covering the features most servers actually need.
-          </div>
+        <section class="page" id="page-commands" data-title="Commands" data-keywords="commands lsec reload open player admin">
+          <section class="doc-section">
+            <h3>Commands</h3>
+            <p>LsEnderChest keeps commands simple and easy to remember.</p>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>/lsec</code></td>
+                    <td>Opens your own Ender Chest.</td>
+                  </tr>
+                  <tr>
+                    <td><code>/lsec &lt;player&gt;</code></td>
+                    <td>Opens another player’s Ender Chest. Access depends on permissions.</td>
+                  </tr>
+                  <tr>
+                    <td><code>/lsec reload</code></td>
+                    <td>Reloads the plugin configuration.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
         </section>
 
-        <section class="doc-section" id="downloads">
-          <h3>Download</h3>
-          <p>
-            Download the latest version of LsEnderChest or browse the source code and releases.
-          </p>
+        <section class="page" id="page-permissions" data-title="Permissions" data-keywords="permissions enderchest.use enderchest.admin enderchest.view.other enderchest.blocked.bypass rows permissions luckperms">
+          <section class="doc-section">
+            <h3>Permissions</h3>
+            <p>Permissions control access, row size, and restriction bypass behavior.</p>
 
-          <div class="card-grid">
-            <div class="card">
-              <h4>Main Plugin</h4>
-              <p>Get the latest public release of LsEnderChest.</p>
-              <div class="pill-row">
-                <a class="btn btn-primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">Download Plugin</a>
-                <a class="btn" href="https://github.com/lopikss/LsEnderChest/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Permission</th>
+                    <th>Description</th>
+                    <th>Default</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>enderchest.use</code></td>
+                    <td>Allows players to open their own Ender Chest.</td>
+                    <td>true</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.admin</code></td>
+                    <td>Allows opening and editing other players’ Ender Chests.</td>
+                    <td>op</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.view.other</code></td>
+                    <td>Allows viewing other players’ Ender Chests in read-only mode.</td>
+                    <td>op</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.bypass</code></td>
+                    <td>Allows players to use the vanilla Ender Chest block instead of the plugin system.</td>
+                    <td>op</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.blocked.bypass</code></td>
+                    <td>Bypasses item restriction checks.</td>
+                    <td>op</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.rows.1</code></td>
+                    <td>Allows 1 row of storage.</td>
+                    <td>false</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.rows.2</code></td>
+                    <td>Allows 2 rows of storage.</td>
+                    <td>false</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.rows.3</code></td>
+                    <td>Allows 3 rows of storage.</td>
+                    <td>false</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.rows.4</code></td>
+                    <td>Allows 4 rows of storage.</td>
+                    <td>false</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.rows.5</code></td>
+                    <td>Allows 5 rows of storage.</td>
+                    <td>false</td>
+                  </tr>
+                  <tr>
+                    <td><code>enderchest.rows.6</code></td>
+                    <td>Allows 6 rows of storage.</td>
+                    <td>false</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-storage" data-title="Storage" data-keywords="storage sqlite mysql database local external offline player data">
+          <section class="doc-section">
+            <h3>Storage</h3>
+            <p>
+              LsEnderChest stores chest contents outside of the vanilla Ender Chest system. This makes expandable sizes, offline access, and staff tools possible in a clean and reliable way.
+            </p>
+
+            <div class="card-grid">
+              <div class="card">
+                <h4>SQLite</h4>
+                <p>Best for most single-server setups. Easy to use and requires no extra database software.</p>
+              </div>
+              <div class="card">
+                <h4>MySQL</h4>
+                <p>Best for larger setups or networks that prefer dedicated external database infrastructure.</p>
               </div>
             </div>
 
-            <div class="card">
-              <h4>Source Code</h4>
-              <p>Browse the repository, changelog, and code.</p>
-              <div class="pill-row">
-                <a class="btn" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">Open Repository</a>
-              </div>
+            <div class="pill-row">
+              <span class="pill">Supports non-vanilla inventory sizes</span>
+              <span class="pill">Better offline player handling</span>
+              <span class="pill">Separate from vanilla Ender Chest data</span>
             </div>
-          </div>
+          </section>
         </section>
 
-        <section class="doc-section" id="features">
-          <h3>Features</h3>
-          <div class="card-grid">
-            <div class="card">
-              <h4>Expandable Ender Chests</h4>
-              <p>Players can have between 1 and 6 rows depending on their permissions.</p>
-            </div>
+        <section class="page" id="page-config-guide" data-title="Config Guide" data-keywords="config guide yml logging title messages mysql sqlite settings blocked-item">
+          <section class="doc-section">
+            <h3>Config Guide</h3>
+            <p>Below is an updated <strong>config-guide.yml</strong> reference that matches the newer config structure.</p>
 
-            <div class="card">
-              <h4>Staff Access</h4>
-              <p>Use <code>/lsec &lt;player&gt;</code> to view or edit another player’s chest depending on permissions.</p>
-            </div>
-
-            <div class="card">
-              <h4>Advanced Item Restrictions</h4>
-              <p>Restrict items by material, lore, and NBT with blacklist or whitelist support.</p>
-            </div>
-
-            <div class="card">
-              <h4>Restriction Bypass Permission</h4>
-              <p>Give trusted players or staff a permission to bypass blocked item restrictions.</p>
-            </div>
-
-            <div class="card">
-              <h4>Async Saving</h4>
-              <p>Chest data saves asynchronously to reduce lag when inventories are closed.</p>
-            </div>
-
-            <div class="card">
-              <h4>Dual Logging System</h4>
-              <p>Includes a clean simple log and a detailed audit log for staff investigations.</p>
-            </div>
-
-            <div class="card">
-              <h4>Offline Player Support</h4>
-              <p>Staff can open the Ender Chests of players even when they are offline.</p>
-            </div>
-
-            <div class="card">
-              <h4>SQLite &amp; MySQL</h4>
-              <p>Choose local database storage or an external database setup depending on your server.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="commands">
-          <h3>Commands</h3>
-          <p>LsEnderChest keeps commands simple and easy to remember.</p>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Command</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><code>/lsec</code></td>
-                  <td>Opens your own Ender Chest.</td>
-                </tr>
-                <tr>
-                  <td><code>/lsec &lt;player&gt;</code></td>
-                  <td>Opens another player’s Ender Chest. Access depends on permissions.</td>
-                </tr>
-                <tr>
-                  <td><code>/lsec reload</code></td>
-                  <td>Reloads the plugin configuration.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="doc-section" id="permissions">
-          <h3>Permissions</h3>
-          <p>Permissions control access, row size, and restriction bypass behavior.</p>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Permission</th>
-                  <th>Description</th>
-                  <th>Default</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><code>enderchest.use</code></td>
-                  <td>Allows players to open their own Ender Chest.</td>
-                  <td>true</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.admin</code></td>
-                  <td>Allows opening and editing other players’ Ender Chests.</td>
-                  <td>op</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.view.other</code></td>
-                  <td>Allows viewing other players’ Ender Chests in read-only mode.</td>
-                  <td>op</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.bypass</code></td>
-                  <td>Allows players to use the vanilla Ender Chest block instead of the plugin system.</td>
-                  <td>op</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.blocked.bypass</code></td>
-                  <td>Bypasses item restriction checks.</td>
-                  <td>op</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.rows.1</code></td>
-                  <td>Allows 1 row of storage.</td>
-                  <td>false</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.rows.2</code></td>
-                  <td>Allows 2 rows of storage.</td>
-                  <td>false</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.rows.3</code></td>
-                  <td>Allows 3 rows of storage.</td>
-                  <td>false</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.rows.4</code></td>
-                  <td>Allows 4 rows of storage.</td>
-                  <td>false</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.rows.5</code></td>
-                  <td>Allows 5 rows of storage.</td>
-                  <td>false</td>
-                </tr>
-                <tr>
-                  <td><code>enderchest.rows.6</code></td>
-                  <td>Allows 6 rows of storage.</td>
-                  <td>false</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="doc-section" id="storage">
-          <h3>Storage</h3>
-          <p>
-            LsEnderChest stores chest contents outside of the vanilla Ender Chest system. This makes expandable sizes, offline access, and staff tools possible in a clean and reliable way.
-          </p>
-
-          <div class="card-grid">
-            <div class="card">
-              <h4>SQLite</h4>
-              <p>Best for most single-server setups. Easy to use and requires no extra database software.</p>
-            </div>
-            <div class="card">
-              <h4>MySQL</h4>
-              <p>Best for larger setups or networks that prefer dedicated external database infrastructure.</p>
-            </div>
-          </div>
-
-          <div class="pill-row">
-            <span class="pill">Supports non-vanilla inventory sizes</span>
-            <span class="pill">Better offline player handling</span>
-            <span class="pill">Separate from vanilla Ender Chest data</span>
-          </div>
-        </section>
-
-        <section class="doc-section" id="config-guide">
-          <h3>Config Guide</h3>
-          <p>
-            Below is an updated <strong>config-guide.yml</strong> reference that matches the newer config structure.
-          </p>
-
-          <div class="code">
-            <pre># =========================================================
+            <div class="code">
+              <pre># =========================================================
 # LsEnderChest - config-guide.yml
 # =========================================================
 
@@ -893,86 +983,73 @@ messages:
   opened-other: "&amp;aOpened %player%'s ender chest."
   reloaded: "&amp;aConfiguration reloaded."
   blocked-item: "&amp;cThat item is not allowed in your Ender Chest."</pre>
-          </div>
-
-          <div class="card-grid" style="margin-top:16px;">
-            <div class="card">
-              <h4>Important Notes</h4>
-              <ul>
-                <li>Changing <strong>online-mode</strong> after players already have data can make inventories appear missing.</li>
-                <li><strong>SQLite</strong> is recommended for most single-server setups.</li>
-                <li><strong>MySQL</strong> is better for dedicated database environments.</li>
-              </ul>
             </div>
-
-            <div class="card">
-              <h4>What You Usually Edit</h4>
-              <ul>
-                <li><strong>storage.type</strong></li>
-                <li><strong>sqlite.file</strong> or <strong>mysql</strong> settings</li>
-                <li><strong>default-rows</strong></li>
-                <li><strong>logging</strong></li>
-                <li><strong>title</strong> and <strong>messages</strong></li>
-              </ul>
-            </div>
-          </div>
+          </section>
         </section>
 
-        <section class="doc-section" id="converter">
-          <h3>LsEnderChestConverter</h3>
-          <p>
-            Switching from vanilla Ender Chests to LsEnderChest? Use the converter plugin to migrate safely.
-          </p>
+        <section class="page" id="page-converter" data-title="Converter" data-keywords="converter migration vanilla join convert commands github releases">
+          <section class="doc-section">
+            <h3>LsEnderChestConverter</h3>
+            <p>Switching from vanilla Ender Chests to LsEnderChest? Use the converter plugin to migrate safely.</p>
 
-          <div class="card">
-            <p>
-              <a class="btn btn-primary" href="https://github.com/lopikss/LsEnderChestConverter/releases" target="_blank" rel="noopener noreferrer">Download Converter</a>
-            </p>
+            <div class="card">
+              <p>
+                <a class="btn btn-primary" href="https://github.com/lopikss/LsEnderChestConverter/releases" target="_blank" rel="noopener noreferrer">Download Converter</a>
+              </p>
+              <ul>
+                <li>Automatic conversion on join</li>
+                <li>Optional manual conversion commands</li>
+                <li>Safe migration without item loss</li>
+              </ul>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-preview" data-title="Preview" data-keywords="preview screenshot image gui chest plugin">
+          <section class="doc-section">
+            <h3>Preview</h3>
+            <p>Example screenshot of the plugin in use.</p>
+            <div class="preview-box">
+              <img src="https://raw.githubusercontent.com/lopikss/LsEnderChest/refs/heads/main/images/echest.png" alt="LsEnderChest preview image">
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-use-cases" data-title="Use Cases" data-keywords="use cases survival staff moderation ranks perks donor offline review">
+          <section class="doc-section">
+            <h3>Use Cases</h3>
             <ul>
-              <li>Automatic conversion on join</li>
-              <li>Optional manual conversion commands</li>
-              <li>Safe migration without item loss</li>
+              <li>Give default players a small Ender Chest and higher ranks more space.</li>
+              <li>Offer extra rows as a store perk.</li>
+              <li>Allow staff to inspect chests during support tickets or moderation cases.</li>
+              <li>Review offline player storage when handling suspicious activity or recovery requests.</li>
             </ul>
-          </div>
+          </section>
         </section>
 
-        <section class="doc-section" id="preview">
-          <h3>Preview</h3>
-          <p>Example screenshot of the plugin in use.</p>
-          <div class="preview-box">
-            <img src="https://raw.githubusercontent.com/lopikss/LsEnderChest/refs/heads/main/images/echest.png" alt="LsEnderChest preview image">
-          </div>
+        <section class="page" id="page-compatibility" data-title="Compatibility" data-keywords="compatibility paper minecraft java 21 supported">
+          <section class="doc-section">
+            <h3>Compatibility</h3>
+            <div class="pill-row">
+              <span class="pill">Paper</span>
+              <span class="pill">Minecraft 1.21.x</span>
+              <span class="pill">Java 21</span>
+            </div>
+          </section>
         </section>
 
-        <section class="doc-section" id="use-cases">
-          <h3>Use Cases</h3>
-          <ul>
-            <li>Give default players a small Ender Chest and higher ranks more space.</li>
-            <li>Offer extra rows as a store perk.</li>
-            <li>Allow staff to inspect chests during support tickets or moderation cases.</li>
-            <li>Review offline player storage when handling suspicious activity or recovery requests.</li>
-          </ul>
-        </section>
-
-        <section class="doc-section" id="compatibility">
-          <h3>Compatibility</h3>
-          <div class="pill-row">
-            <span class="pill">Paper</span>
-            <span class="pill">Minecraft 1.21.x</span>
-            <span class="pill">Java 21</span>
-          </div>
-        </section>
-
-        <section class="doc-section" id="installation">
-          <h3>Installation</h3>
-          <div class="code">
-            <pre>1. Download the plugin jar
+        <section class="page" id="page-installation" data-title="Installation" data-keywords="installation install setup plugins folder config permissions ranks">
+          <section class="doc-section">
+            <h3>Installation</h3>
+            <div class="code">
+              <pre>1. Download the plugin jar
 2. Place it in your server's plugins folder
 3. Start or restart the server
 4. Edit config.yml if needed
 5. Assign row permissions to your ranks
 6. Test /lsec in-game</pre>
-          </div>
+            </div>
+          </section>
         </section>
 
         <p class="footer">LsEnderChest wiki • made for lopikss</p>
@@ -983,7 +1060,46 @@ messages:
   <script>
     const sidebar = document.getElementById("sidebar");
     const menuBtn = document.getElementById("menuBtn");
-    const navLinks = document.querySelectorAll(".nav a");
+    const navButtons = Array.from(document.querySelectorAll(".nav button[data-page]"));
+    const pages = Array.from(document.querySelectorAll(".page"));
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const searchResultList = document.getElementById("searchResultList");
+    const navEmpty = document.getElementById("navEmpty");
+    const quickOpenButtons = document.querySelectorAll("[data-open-page]");
+
+    function setActivePage(pageId, pushHash = true) {
+      pages.forEach(page => {
+        page.classList.toggle("active", page.id === "page-" + pageId);
+      });
+
+      navButtons.forEach(button => {
+        button.classList.toggle("active", button.dataset.page === pageId);
+      });
+
+      if (pushHash) {
+        history.replaceState(null, "", "#" + pageId);
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (window.innerWidth <= 980) {
+        sidebar.classList.remove("open");
+      }
+    }
+
+    navButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        setActivePage(button.dataset.page);
+      });
+    });
+
+    quickOpenButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const pageId = button.dataset.openPage;
+        setActivePage(pageId);
+      });
+    });
 
     if (menuBtn) {
       menuBtn.addEventListener("click", () => {
@@ -991,32 +1107,113 @@ messages:
       });
     }
 
-    navLinks.forEach(link => {
-      link.addEventListener("click", () => {
-        if (window.innerWidth <= 980) {
-          sidebar.classList.remove("open");
-        }
+    function escapeHtml(text) {
+      return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function highlight(text, query) {
+      if (!query) return escapeHtml(text);
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return escapeHtml(text).replace(
+        new RegExp("(" + escaped + ")", "ig"),
+        "<mark>$1</mark>"
+      );
+    }
+
+    function buildSearchIndex() {
+      return pages.map(page => {
+        const title = page.dataset.title || "";
+        const keywords = page.dataset.keywords || "";
+        const text = page.innerText || "";
+        return {
+          id: page.id.replace("page-", ""),
+          title,
+          keywords,
+          text
+        };
       });
+    }
+
+    const searchIndex = buildSearchIndex();
+
+    function renderSearchResults(query) {
+      const q = query.trim().toLowerCase();
+
+      navButtons.forEach(button => {
+        const matches = button.textContent.toLowerCase().includes(q);
+        button.style.display = matches || !q ? "" : "none";
+      });
+
+      const anyVisibleNav = navButtons.some(button => button.style.display !== "none");
+      navEmpty.style.display = (!anyVisibleNav && q) ? "block" : "none";
+
+      if (!q) {
+        searchResults.classList.remove("visible");
+        searchResultList.innerHTML = "";
+        return;
+      }
+
+      const matches = searchIndex
+        .filter(item =>
+          item.title.toLowerCase().includes(q) ||
+          item.keywords.toLowerCase().includes(q) ||
+          item.text.toLowerCase().includes(q)
+        )
+        .slice(0, 8);
+
+      searchResultList.innerHTML = "";
+
+      if (!matches.length) {
+        searchResults.classList.add("visible");
+        searchResultList.innerHTML = `<div class="search-result"><strong>No results found</strong><span>Try another keyword.</span></div>`;
+        return;
+      }
+
+      matches.forEach(item => {
+        const snippetSource = item.text.replace(/\s+/g, " ").trim();
+        const index = snippetSource.toLowerCase().indexOf(q);
+        let snippet = snippetSource;
+
+        if (index >= 0) {
+          const start = Math.max(0, index - 60);
+          const end = Math.min(snippetSource.length, index + 120);
+          snippet = (start > 0 ? "..." : "") + snippetSource.slice(start, end) + (end < snippetSource.length ? "..." : "");
+        } else {
+          snippet = snippetSource.slice(0, 160) + (snippetSource.length > 160 ? "..." : "");
+        }
+
+        const card = document.createElement("div");
+        card.className = "search-result";
+        card.innerHTML = `
+          <strong>${highlight(item.title, q)}</strong>
+          <span>${highlight(snippet, q)}</span>
+        `;
+        card.addEventListener("click", () => {
+          setActivePage(item.id);
+          searchInput.value = "";
+          renderSearchResults("");
+        });
+        searchResultList.appendChild(card);
+      });
+
+      searchResults.classList.add("visible");
+    }
+
+    searchInput.addEventListener("input", (event) => {
+      renderSearchResults(event.target.value);
     });
 
-    const sections = [...document.querySelectorAll(".doc-section")];
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const id = entry.target.getAttribute("id");
-        const link = document.querySelector('.nav a[href="#' + id + '"]');
-        if (!link) return;
+    const initialHash = window.location.hash.replace("#", "");
+    const validPageIds = navButtons.map(button => button.dataset.page);
 
-        if (entry.isIntersecting) {
-          document.querySelectorAll(".nav a").forEach(a => a.classList.remove("active"));
-          link.classList.add("active");
-        }
-      });
-    }, {
-      rootMargin: "-20% 0px -70% 0px",
-      threshold: 0
-    });
-
-    sections.forEach(section => observer.observe(section));
+    if (initialHash && validPageIds.includes(initialHash)) {
+      setActivePage(initialHash, false);
+    } else {
+      setActivePage("overview", false);
+    }
   </script>
 </body>
 </html>
