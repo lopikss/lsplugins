@@ -3,1362 +3,1332 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LsEnderChest Wiki</title>
+  <meta name="theme-color" content="#0b0b10" />
+  <title>LsEnderChest Docs — 2.0.0</title>
   <style>
     :root {
-      --bg: #0b0f14;
-      --bg2: #101720;
-      --panel: #131b25;
-      --panel-2: #18222e;
-      --panel-3: #0f151d;
-      --line: rgba(255,255,255,0.08);
-      --line-strong: rgba(255,255,255,0.14);
-      --text: #eef3fb;
-      --muted: #a8b6c9;
-      --accent: #4db4ff;
-      --accent-2: #7d8cff;
-      --success: #58d69d;
-      --shadow: 0 18px 50px rgba(0,0,0,0.35);
-      --radius: 18px;
-      --sidebar-width: 290px;
-      --topbar-height: 74px;
+      color-scheme: dark;
+      --bg: #0a0a0f;
+      --sidebar: #0d0d13;
+      --panel: #111119;
+      --panel-2: #15151f;
+      --panel-3: #1a1a25;
+      --text: #f4f3f8;
+      --text-2: #d6d3df;
+      --muted: #9591a3;
+      --line: #23222d;
+      --line-strong: #343242;
+      --accent: #a970ff;
+      --accent-2: #7d63ff;
+      --accent-soft: rgba(169, 112, 255, .11);
+      --accent-line: rgba(169, 112, 255, .28);
+      --green: #6bd89b;
+      --green-soft: rgba(107, 216, 155, .10);
+      --yellow: #f3c969;
+      --yellow-soft: rgba(243, 201, 105, .10);
+      --red: #ff8089;
+      --red-soft: rgba(255, 128, 137, .10);
+      --cyan: #64d9e8;
+      --cyan-soft: rgba(100, 217, 232, .10);
+      --sidebar-width: 272px;
+      --topbar-height: 64px;
+      --content-width: 1040px;
+      --radius: 14px;
+      --radius-lg: 20px;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .24);
     }
 
-    * {
-      box-sizing: border-box;
+    body.light {
+      color-scheme: light;
+      --bg: #f7f7fa;
+      --sidebar: #ffffff;
+      --panel: #ffffff;
+      --panel-2: #f8f8fb;
+      --panel-3: #f0eff5;
+      --text: #191822;
+      --text-2: #3d3a49;
+      --muted: #777282;
+      --line: #e6e4eb;
+      --line-strong: #d4d0db;
+      --accent: #7a42dd;
+      --accent-2: #6248dc;
+      --accent-soft: rgba(122, 66, 221, .07);
+      --accent-line: rgba(122, 66, 221, .20);
+      --green: #188956;
+      --green-soft: rgba(24, 137, 86, .08);
+      --yellow: #9c6b12;
+      --yellow-soft: rgba(156, 107, 18, .08);
+      --red: #c94f5c;
+      --red-soft: rgba(201, 79, 92, .08);
+      --cyan: #127d8d;
+      --cyan-soft: rgba(18, 125, 141, .08);
+      --shadow: 0 16px 40px rgba(29, 26, 40, .08);
     }
 
-    html, body {
-      margin: 0;
-      min-height: 100%;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
       color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(77,180,255,0.10), transparent 26%),
-        radial-gradient(circle at top right, rgba(125,140,255,0.10), transparent 26%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      line-height: 1.7;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
+    button, input { font: inherit; }
+    a { color: inherit; }
+    code, pre { font-family: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
+    ::selection { background: rgba(169, 112, 255, .28); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-    code {
-      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
-      font-size: 0.95em;
-      background: rgba(255,255,255,0.05);
-      padding: 2px 6px;
-      border-radius: 8px;
-    }
-
-    .layout {
+    .app {
       min-height: 100vh;
       display: grid;
-      grid-template-columns: var(--sidebar-width) 1fr;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
     }
 
+    /* Sidebar */
     .sidebar {
       position: sticky;
       top: 0;
       height: 100vh;
-      border-right: 1px solid var(--line);
-      background: rgba(11, 15, 20, 0.90);
-      backdrop-filter: blur(14px);
-      padding: 18px 16px 20px;
       overflow-y: auto;
-      z-index: 100;
+      border-right: 1px solid var(--line);
+      background: var(--sidebar);
+      padding: 16px 14px 24px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--line-strong) transparent;
+      z-index: 80;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px 12px 18px;
+      gap: 11px;
+      padding: 7px 8px 16px;
+      margin-bottom: 10px;
       border-bottom: 1px solid var(--line);
-      margin-bottom: 18px;
     }
 
-    .brand-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
       display: grid;
       place-items: center;
+      flex: 0 0 auto;
+      font-weight: 900;
+      letter-spacing: -.04em;
       color: white;
-      font-weight: 800;
-      box-shadow: var(--shadow);
-      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(145deg, #b36fff, #6751dd);
+      box-shadow: 0 7px 18px rgba(111, 72, 210, .22);
     }
 
-    .brand-text h1 {
-      margin: 0;
-      font-size: 1.02rem;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+    .brand-copy { min-width: 0; }
+    .brand-copy strong { display: block; font-size: .95rem; letter-spacing: -.015em; }
+    .brand-copy span { display: block; margin-top: 1px; color: var(--muted); font-size: .77rem; }
+
+    .version-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+      padding: 4px 7px;
+      border: 1px solid var(--accent-line);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: .68rem;
+      font-weight: 750;
     }
 
-    .brand-text p {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .nav-group {
-      margin-bottom: 18px;
-    }
-
+    .nav-group { margin-top: 16px; }
     .nav-label {
-      color: var(--muted);
-      font-size: 0.78rem;
+      padding: 0 9px 6px;
+      color: #6f6a7b;
+      font-size: .68rem;
+      font-weight: 760;
+      letter-spacing: .085em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 8px 12px;
-      margin-bottom: 6px;
     }
 
-    .nav {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    body.light .nav-label { color: #918b9b; }
 
+    .nav { display: grid; gap: 2px; }
     .nav button {
       width: 100%;
-      text-align: left;
       display: flex;
       align-items: center;
       gap: 10px;
-      color: #dbe7f7;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      background: transparent;
-      cursor: pointer;
-      transition: 0.18s ease;
-      font-size: 0.95rem;
-      font-family: inherit;
-    }
-
-    .nav button:hover,
-    .nav button.active {
-      background: rgba(255,255,255,0.06);
-      border-color: var(--line);
-      color: white;
-    }
-
-    .nav-empty {
+      padding: 9px 10px;
       color: var(--muted);
-      font-size: 0.9rem;
-      padding: 8px 12px;
-      display: none;
+      text-align: left;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      background: transparent;
+      transition: .14s ease;
     }
 
-    .content-wrap {
-      min-width: 0;
+    .nav button::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: #4d4a58;
+      transition: .14s ease;
     }
 
+    .nav button:hover {
+      color: var(--text-2);
+      background: var(--panel-2);
+    }
+
+    .nav button.active {
+      color: var(--text);
+      border-color: var(--accent-line);
+      background: var(--accent-soft);
+      font-weight: 650;
+    }
+
+    .nav button.active::before {
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(169,112,255,.10);
+    }
+
+    .sidebar-footer {
+      margin-top: 22px;
+      padding: 14px 9px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .73rem;
+    }
+
+    /* Main shell */
+    .content-shell { min-width: 0; }
     .topbar {
       position: sticky;
       top: 0;
       z-index: 50;
-      height: var(--topbar-height);
+      min-height: var(--topbar-height);
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(260px, 480px) 1fr auto;
       align-items: center;
-      gap: 18px;
-      padding: 0 28px;
+      gap: 14px;
+      padding: 10px 24px;
       border-bottom: 1px solid var(--line);
-      background: rgba(11, 15, 20, 0.84);
-      backdrop-filter: blur(14px);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
     }
 
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: nowrap;
-      justify-self: end;
-    }
-
-    .top-actions .btn {
-      white-space: nowrap;
-    }
+    .menu-button { display: none; }
 
     .search {
-      flex: 1;
-      max-width: 560px;
+      min-width: 0;
+      height: 40px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      background: rgba(255,255,255,0.04);
+      gap: 10px;
+      padding: 0 12px;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px 14px;
-      color: var(--muted);
+      border-radius: 10px;
+      background: var(--panel);
+      transition: .14s ease;
     }
 
+    .search:focus-within {
+      border-color: var(--accent-line);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .search svg { width: 16px; height: 16px; color: var(--muted); flex: 0 0 auto; }
     .search input {
-      flex: 1;
-      border: none;
-      outline: none;
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
       background: transparent;
       color: var(--text);
-      font: inherit;
+    }
+    .search input::placeholder { color: #6f6b79; }
+
+    .shortcut {
+      flex: 0 0 auto;
+      padding: 2px 6px;
+      color: var(--muted);
+      font-size: .68rem;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--panel-2);
     }
 
-    .top-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .topbar-title {
+      min-width: 0;
+      color: var(--muted);
+      font-size: .82rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+    .topbar-title strong { color: var(--text-2); font-weight: 650; }
 
+    .top-actions { display: flex; align-items: center; gap: 8px; }
     .btn {
+      min-height: 38px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      border-radius: 12px;
-      padding: 11px 16px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      transition: 0.18s ease;
+      gap: 7px;
+      padding: 8px 11px;
+      cursor: pointer;
       text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel);
+      color: var(--text-2);
+      font-size: .82rem;
+      font-weight: 650;
+      transition: .14s ease;
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.08);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #68c7ff);
-      color: white;
-      border: none;
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.05);
-    }
+    .btn:hover { border-color: var(--line-strong); background: var(--panel-2); color: var(--text); }
+    .btn.primary { border-color: var(--accent-line); background: var(--accent); color: white; }
+    .btn.primary:hover { filter: brightness(1.06); }
+    .btn.icon { width: 38px; padding: 0; }
+    .btn svg { width: 16px; height: 16px; }
 
     .main {
-      max-width: 1180px;
-      padding: 26px 28px 70px;
+      width: min(var(--content-width), calc(100% - 48px));
       margin: 0 auto;
+      padding: 34px 0 72px;
     }
 
-    .page {
+    .page { display: none; }
+    .page.active { display: block; animation: pageIn .16s ease-out; }
+    @keyframes pageIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    /* Search results */
+    .search-results {
       display: none;
+      margin-bottom: 20px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
     }
+    .search-results.visible { display: block; }
+    .search-results-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 9px; }
+    .search-results-head strong { font-size: .85rem; }
+    .search-results-head span { color: var(--muted); font-size: .74rem; }
+    .search-result-list { display: grid; gap: 5px; }
+    .search-result {
+      padding: 10px 11px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      transition: .12s ease;
+    }
+    .search-result:hover { border-color: var(--line); background: var(--panel-2); }
+    .search-result strong { display: block; font-size: .84rem; }
+    .search-result span { display: block; margin-top: 2px; color: var(--muted); font-size: .76rem; }
+    mark { padding: 0 2px; color: var(--text); background: rgba(169,112,255,.18); border-radius: 3px; }
 
-    .page.active {
-      display: block;
-    }
+    /* Common content */
+    .page-header { margin-bottom: 24px; }
+    .page-kicker { margin-bottom: 7px; color: var(--accent); font-size: .72rem; font-weight: 780; letter-spacing: .075em; text-transform: uppercase; }
+    .page-title { margin: 0; font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.05; letter-spacing: -.045em; }
+    .page-lead { max-width: 780px; margin: 13px 0 0; color: var(--muted); font-size: 1rem; }
 
     .hero {
-      background: linear-gradient(135deg, rgba(77,180,255,0.12), rgba(125,140,255,0.08));
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: var(--shadow);
-      margin-bottom: 22px;
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--panel);
+      box-shadow: var(--shadow);
     }
 
-    .hero::after {
+    .hero::before {
       content: "";
       position: absolute;
-      inset: auto -80px -80px auto;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(77,180,255,0.24), transparent 60%);
-      pointer-events: none;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: linear-gradient(var(--accent), var(--accent-2));
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .eyebrow {
-      color: var(--accent);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .hero h2 {
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 3.6rem);
-      line-height: 1.02;
-      letter-spacing: -0.04em;
-    }
-
-    .hero p {
-      margin: 16px 0 0;
-      color: var(--muted);
-      max-width: 980px;
-      font-size: 1.02rem;
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
-    }
-
-    .quick-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 20px;
-    }
-
-    .stat {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.1rem;
-      margin-bottom: 4px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .doc-section {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      padding: 28px;
-      margin-bottom: 18px;
-    }
-
-    .doc-section h3 {
-      margin: 0 0 14px;
-      font-size: 1.7rem;
-      letter-spacing: -0.03em;
-    }
-
-    .doc-section h4 {
-      margin: 22px 0 10px;
-      font-size: 1.05rem;
-      letter-spacing: -0.01em;
-    }
-
-    .doc-section p {
-      margin: 0 0 14px;
-      color: var(--muted);
-    }
-
-    .doc-section ul {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--muted);
-    }
-
-    .doc-section li + li {
-      margin-top: 9px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .card h4 {
-      margin-top: 0;
-    }
-
-    .preview-box {
-      overflow: hidden;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: #0a0f15;
-    }
-
-    .preview-box img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    .code {
-      margin-top: 14px;
-      background: #0c1219;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-      overflow-x: auto;
-    }
-
-    .code pre {
-      margin: 0;
-      color: #e8eefb;
-      font-size: 0.95rem;
-      line-height: 1.7;
-      font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      margin-top: 14px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 760px;
-      background: rgba(255,255,255,0.03);
-    }
-
-    th,
-    td {
-      text-align: left;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--line);
-      vertical-align: top;
-    }
-
-    th {
-      color: white;
-      background: rgba(255,255,255,0.04);
-      font-size: 0.94rem;
-    }
-
-    td {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .pill {
+    .hero-copy { min-width: 0; }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+    .chip {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
+      gap: 6px;
+      padding: 5px 8px;
       border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel-2);
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: .71rem;
+      font-weight: 650;
+    }
+    .chip.accent { color: var(--accent); border-color: var(--accent-line); background: var(--accent-soft); }
+    .chip.green { color: var(--green); border-color: rgba(107,216,155,.22); background: var(--green-soft); }
+
+    .hero h1 { margin: 0; font-size: clamp(2.4rem, 5vw, 4.1rem); line-height: .98; letter-spacing: -.055em; }
+    .hero p { max-width: 690px; margin: 17px 0 0; color: var(--muted); font-size: 1rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 21px; }
+
+    .preview {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #08080d;
+    }
+    .preview img { display: block; width: 100%; height: auto; }
+    .preview figcaption { padding: 9px 11px; color: var(--muted); font-size: .72rem; border-top: 1px solid var(--line); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .stat {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+    }
+    .stat strong { display: block; color: var(--text); font-size: .92rem; }
+    .stat span { display: block; margin-top: 3px; color: var(--muted); font-size: .73rem; }
+
+    .section {
+      margin-top: 18px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+    .section h2 { margin: 0 0 11px; font-size: 1.35rem; letter-spacing: -.025em; }
+    .section h3 { margin: 22px 0 8px; font-size: 1rem; }
+    .section h3:first-child { margin-top: 0; }
+    .section p { margin: 0 0 12px; color: var(--muted); }
+    .section p:last-child { margin-bottom: 0; }
+
+    .cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 11px; }
+    .cards.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .card {
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel-2);
+    }
+    .card h3, .card h4 { margin: 0 0 6px; color: var(--text); font-size: .93rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .82rem; }
+    .card code { color: var(--text-2); }
+
+    .feature-card { position: relative; padding-left: 46px; }
+    .feature-icon {
+      position: absolute;
+      left: 15px;
+      top: 16px;
+      width: 23px;
+      height: 23px;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      border: 1px solid var(--accent-line);
+      border-radius: 7px;
+      background: var(--accent-soft);
+      font-size: .72rem;
+      font-weight: 800;
     }
 
     .callout {
-      margin-top: 16px;
-      border-radius: 18px;
-      padding: 16px 18px;
-      border: 1px solid rgba(88,214,157,0.24);
-      background: rgba(88,214,157,0.10);
-      color: #e8fff3;
+      margin-top: 14px;
+      padding: 13px 14px;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 9px 9px 0;
+      background: var(--accent-soft);
+      color: var(--text-2);
+      font-size: .83rem;
+    }
+    .callout.warning { border-left-color: var(--yellow); background: var(--yellow-soft); }
+    .callout.danger { border-left-color: var(--red); background: var(--red-soft); }
+    .callout.good { border-left-color: var(--green); background: var(--green-soft); }
+
+    .steps { display: grid; gap: 9px; counter-reset: step; }
+    .step {
+      position: relative;
+      min-height: 46px;
+      padding: 12px 14px 12px 51px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel-2);
+      color: var(--muted);
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 13px;
+      top: 10px;
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-weight: 800;
+      font-size: .75rem;
+      border: 1px solid var(--accent-line);
+      border-radius: 8px;
+      background: var(--accent-soft);
+    }
+    .step strong { color: var(--text-2); }
+
+    ul.clean { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+    ul.clean li { position: relative; padding-left: 18px; color: var(--muted); }
+    ul.clean li::before { content: "•"; position: absolute; left: 3px; color: var(--accent); }
+
+    .table-wrap { overflow-x: auto; margin-top: 12px; border: 1px solid var(--line); border-radius: 11px; }
+    table { width: 100%; min-width: 680px; border-collapse: collapse; background: var(--panel-2); }
+    th, td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { color: var(--text-2); font-size: .72rem; letter-spacing: .045em; text-transform: uppercase; background: var(--panel-3); }
+    td { color: var(--muted); font-size: .82rem; }
+    tr:last-child td { border-bottom: 0; }
+    td code { color: var(--text); font-size: .78rem; }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: .69rem;
+      font-weight: 750;
+    }
+    .status.good { color: var(--green); background: var(--green-soft); }
+    .status.warn { color: var(--yellow); background: var(--yellow-soft); }
+
+    .code-block {
+      position: relative;
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      overflow: hidden;
+      background: #0b0b11;
+    }
+    body.light .code-block { background: #f4f3f8; }
+    .code-head {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px 8px 13px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .7rem;
+      background: rgba(255,255,255,.02);
+    }
+    .copy-btn {
+      padding: 4px 7px;
+      cursor: pointer;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel-2);
+      font-size: .66rem;
+    }
+    .copy-btn:hover { color: var(--text); border-color: var(--line-strong); }
+    pre { margin: 0; overflow: auto; padding: 15px; color: #ddd9e8; font-size: .78rem; line-height: 1.62; white-space: pre; scrollbar-width: thin; }
+    body.light pre { color: #322f3b; }
+    code.inline, :not(pre) > code {
+      padding: 2px 5px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--panel-2);
+      color: var(--text-2);
+      font-size: .88em;
+    }
+
+    .command-list { display: grid; gap: 8px; }
+    .command {
+      display: grid;
+      grid-template-columns: minmax(210px, .42fr) minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel-2);
+    }
+    .command code { color: var(--accent); font-size: .79rem; font-weight: 700; }
+    .command span { color: var(--muted); font-size: .8rem; }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 13px;
+    }
+    .flow-item { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-2); color: var(--text-2); font-size: .76rem; }
+    .flow-arrow { color: var(--accent); font-weight: 900; }
+
+    .folder-tree {
+      margin-top: 12px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel-2);
+      color: var(--text-2);
+      font-size: .78rem;
+      white-space: pre-wrap;
     }
 
     .footer {
-      margin-top: 18px;
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
       color: var(--muted);
-      font-size: 0.94rem;
-      text-align: center;
+      font-size: .74rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    .search-results {
-      display: none;
-      margin-bottom: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
+    .drawer-backdrop { display: none; }
+
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .preview { max-width: 720px; }
+      .stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .cards.three { grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
 
-    .search-results.visible {
-      display: block;
-    }
-
-    .search-results h3 {
-      margin: 0 0 12px;
-      font-size: 1.2rem;
-    }
-
-    .search-result-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .search-result {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px;
-      cursor: pointer;
-      transition: 0.18s ease;
-    }
-
-    .search-result:hover {
-      border-color: rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.06);
-    }
-
-    .search-result strong {
-      display: block;
-      margin-bottom: 4px;
-      color: white;
-    }
-
-    .search-result span {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    mark {
-      background: rgba(77,180,255,0.18);
-      color: white;
-      padding: 0 2px;
-      border-radius: 4px;
-    }
-
-    .mobile-nav-toggle {
-      display: none;
-    }
-
-    @media (max-width: 1180px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 980px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
+    @media (max-width: 940px) {
+      .app { grid-template-columns: 1fr; }
       .sidebar {
         position: fixed;
         left: 0;
         top: 0;
-        width: min(86vw, 320px);
-        transform: translateX(-100%);
-        transition: 0.22s ease;
-        z-index: 100;
+        width: min(86vw, 310px);
+        transform: translateX(-104%);
+        transition: transform .2s ease;
         box-shadow: var(--shadow);
       }
-
-      .sidebar.open {
-        transform: translateX(0);
+      .sidebar.open { transform: translateX(0); }
+      .drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 70;
+        background: rgba(0,0,0,.5);
       }
-
-      .mobile-nav-toggle {
-        display: inline-flex;
-      }
-
-      .quick-stats,
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar {
-        padding: 0 16px;
-      }
-
-      .main {
-        padding: 20px 16px 56px;
-      }
+      .drawer-backdrop.visible { display: block; }
+      .menu-button { display: inline-flex; }
+      .topbar { grid-template-columns: auto minmax(0,1fr) auto; padding: 10px 14px; }
+      .topbar-title { display: none; }
+      .main { width: min(var(--content-width), calc(100% - 28px)); padding-top: 24px; }
     }
 
     @media (max-width: 700px) {
-      .search {
-        max-width: none;
-      }
+      .top-actions .desktop-link { display: none; }
+      .shortcut { display: none; }
+      .hero { padding: 23px 19px; gap: 20px; }
+      .hero h1 { font-size: clamp(2.2rem, 14vw, 3.5rem); }
+      .stats, .cards, .cards.three { grid-template-columns: 1fr; }
+      .section { padding: 19px; }
+      .command { grid-template-columns: 1fr; gap: 4px; }
+      .page-title { font-size: 2.25rem; }
+    }
 
-      .topbar {
-        height: auto;
-        padding: 12px 16px;
-        align-items: stretch;
-        flex-direction: column;
-      }
+    @media (max-width: 480px) {
+      .topbar { gap: 8px; padding: 9px 10px; }
+      .search { padding: 0 9px; }
+      .btn.icon { width: 36px; }
+      .main { width: calc(100% - 20px); }
+      .hero { border-radius: 15px; }
+      .hero-actions .btn { width: 100%; }
+    }
 
-      .hero {
-        padding: 22px;
-      }
-
-      .doc-section {
-        padding: 22px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-  <div class="layout">
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <div class="app">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
-        <div class="brand-logo">LE</div>
-        <div class="brand-text">
-          <h1>LsEnderChest Wiki</h1>
-          <p>Documentation</p>
+        <div class="brand-mark">LE</div>
+        <div class="brand-copy">
+          <strong>LsEnderChest</strong>
+          <span>Documentation</span>
         </div>
+        <span class="version-pill">2.0.0</span>
       </div>
 
       <div class="nav-group">
-        <div class="nav-label">Getting Started</div>
+        <div class="nav-label">Start here</div>
         <nav class="nav">
-          <button data-page="overview" class="active">Overview</button>
-          <button data-page="downloads">Download</button>
+          <button class="active" data-page="overview">Overview</button>
           <button data-page="installation">Installation</button>
           <button data-page="compatibility">Compatibility</button>
         </nav>
       </div>
 
       <div class="nav-group">
-        <div class="nav-label">Documentation</div>
+        <div class="nav-label">Usage</div>
         <nav class="nav">
           <button data-page="features">Features</button>
           <button data-page="commands">Commands</button>
           <button data-page="permissions">Permissions</button>
-          <button data-page="storage">Storage</button>
-          <button data-page="config-guide">Config Guide</button>
-          <button data-page="converter">Converter</button>
-          <button data-page="preview">Preview</button>
-          <button data-page="use-cases">Use Cases</button>
+          <button data-page="restore">Restore system</button>
+          <button data-page="overflow">Overflow protection</button>
+          <button data-page="conversion">Conversion</button>
         </nav>
       </div>
 
-      <div class="nav-empty" id="navEmpty">No matching tabs found.</div>
+      <div class="nav-group">
+        <div class="nav-label">Administration</div>
+        <nav class="nav">
+          <button data-page="logging">Logging &amp; audit</button>
+          <button data-page="storage">Storage</button>
+          <button data-page="configuration">Configuration</button>
+          <button data-page="blocked-items">Blocked items</button>
+          <button data-page="internal-data">Internal data</button>
+        </nav>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Links</div>
+        <nav class="nav">
+          <button data-page="preview">Preview</button>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        Paper 26.3 · Java 25<br>
+        Made by lopikss
+      </div>
     </aside>
 
-    <div class="content-wrap">
+    <div class="content-shell">
       <header class="topbar">
-        <div style="display:flex; gap:10px; align-items:center; width:100%;">
-          <button class="btn mobile-nav-toggle" id="menuBtn">☰ Menu</button>
-          <label class="search">
-            <span>🔎</span>
-            <input type="text" id="searchInput" placeholder="Search docs, tabs, commands, permissions..." />
-          </label>
-        </div>
+        <button class="btn icon menu-button" id="menuBtn" aria-label="Open navigation" title="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+
+        <label class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.7-3.7"/></svg>
+          <input id="searchInput" type="search" autocomplete="off" placeholder="Search documentation…" aria-label="Search documentation" />
+          <span class="shortcut">Ctrl K</span>
+        </label>
+
+        <div class="topbar-title">LsEnderChest / <strong id="currentPageLabel">Overview</strong></div>
 
         <div class="top-actions">
-          <a class="btn btn-primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">Download Plugin</a>
-          <a class="btn" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <button class="btn icon" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
+            <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8Z"/></svg>
+          </button>
+          <a class="btn desktop-link" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="btn primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">Download</a>
         </div>
       </header>
 
       <main class="main">
         <section class="search-results" id="searchResults">
-          <h3>Search Results</h3>
+          <div class="search-results-head"><strong>Search results</strong><span id="searchCount"></span></div>
           <div class="search-result-list" id="searchResultList"></div>
         </section>
 
-        <section class="page active" id="page-overview" data-title="Overview" data-keywords="overview home intro wiki docs lsenderchest ender chest plugin">
+        <!-- OVERVIEW -->
+        <section class="page active" id="page-overview" data-title="Overview" data-keywords="home overview lsenderchest 2.0 paper ender chest plugin restore overflow conversion logging">
           <section class="hero">
-            <div class="hero-grid">
-              <div>
-                <div class="eyebrow">Ls Plugins</div>
-                <h2>LsEnderChest</h2>
-                <p>
-                  A modern and lightweight Ender Chest plugin for Paper 1.21.x servers. LsEnderChest replaces the vanilla Ender Chest with a permission-based expandable storage system, letting you give players 1–6 rows depending on rank, perks, or progression.
-                </p>
-                <p>
-                  It is built to stay simple, fast, and configurable while supporting SQLite, MySQL, offline player access, read-only staff viewing, advanced item restrictions, and a dual logging system.
-                </p>
-
-                <div class="hero-buttons">
-                  <a class="btn btn-primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">⬇ Download on Modrinth</a>
-                  <a class="btn" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">View Source</a>
-                  <button class="btn" data-open-page="config-guide" type="button">Open Config Guide</button>
-                </div>
-
-                <div class="quick-stats">
-                  <div class="stat">
-                    <strong>1–6 Rows</strong>
-                    <span>Permission-based storage sizes</span>
-                  </div>
-                  <div class="stat">
-                    <strong>SQLite + MySQL</strong>
-                    <span>Flexible storage backends</span>
-                  </div>
-                  <div class="stat">
-                    <strong>Paper 1.21.x</strong>
-                    <span>Built for modern servers</span>
-                  </div>
-                </div>
+            <div class="hero-copy">
+              <div class="hero-badges">
+                <span class="chip accent">LsEnderChest 2.0.0</span>
+                <span class="chip green">Paper 26.3</span>
+                <span class="chip">Java 25</span>
               </div>
-
-              <div class="preview-box">
-                <img src="https://raw.githubusercontent.com/lopikss/LsEnderChest/refs/heads/main/images/echest.png" alt="LsEnderChest preview">
+              <h1>Ender Chests, rebuilt for servers.</h1>
+              <p>
+                LsEnderChest replaces vanilla Ender Chest storage with a permission-based 1–6 row system and adds the tooling a real server needs: live staff access, restore history, safe overflow protection, built-in vanilla migration, SQLite/MySQL storage, and per-player audit logs.
+              </p>
+              <div class="hero-actions">
+                <a class="btn primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">Download on Modrinth</a>
+                <a class="btn" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">View source</a>
+                <button class="btn" data-open-page="installation">Installation</button>
               </div>
             </div>
+            <figure class="preview">
+              <img src="https://raw.githubusercontent.com/lopikss/LsEnderChest/refs/heads/main/images/echest.png" alt="LsEnderChest in-game preview" />
+              <figcaption>LsEnderChest in game</figcaption>
+            </figure>
           </section>
 
-          <section class="doc-section">
-            <h3>Overview</h3>
-            <p>
-              Vanilla Minecraft limits Ender Chests to a fixed size. LsEnderChest replaces that behavior with a custom storage system that lets you decide how many rows a player should have based on permissions.
-            </p>
-            <p>
-              This makes it ideal for survival servers, donor ranks, store perks, progression systems, and moderation tools. Players can have anywhere from <strong>1 to 6 rows</strong>, while staff can inspect or view other players’ storage when needed.
-            </p>
-            <div class="callout">
-              LsEnderChest is designed to stay lightweight and easy to manage while still covering the features most servers actually need.
+          <div class="stats">
+            <div class="stat"><strong>1–6 rows</strong><span>Permission-based storage</span></div>
+            <div class="stat"><strong>Restore GUI</strong><span>Session-based history</span></div>
+            <div class="stat"><strong>Overflow safety</strong><span>No item loss on downsizing</span></div>
+            <div class="stat"><strong>SQLite + MySQL</strong><span>Flexible storage backends</span></div>
+          </div>
+
+          <section class="section">
+            <h2>What changed in 2.0?</h2>
+            <div class="cards three">
+              <div class="card feature-card"><span class="feature-icon">R</span><h3>Restore history</h3><p>Open a GUI, preview historical sessions, and safely restore a player's chest. The current state is backed up first.</p></div>
+              <div class="card feature-card"><span class="feature-icon">O</span><h3>Overflow protection</h3><p>If a player loses row permissions, extra items are moved into a protected one-time Overflow Chest instead of disappearing.</p></div>
+              <div class="card feature-card"><span class="feature-icon">A</span><h3>Live admin access</h3><p>Admins can open a chest while the owner is using it. Both interact with the same live inventory instead of stale copies.</p></div>
+              <div class="card feature-card"><span class="feature-icon">C</span><h3>Built-in conversion</h3><p>The old standalone converter is no longer required. Vanilla Ender Chest migration is built directly into LsEnderChest.</p></div>
+              <div class="card feature-card"><span class="feature-icon">L</span><h3>Per-player journals</h3><p>Audit logs are stored per chest owner using UUID filenames, with the real actor recorded for player and admin actions.</p></div>
+              <div class="card feature-card"><span class="feature-icon">S</span><h3>Safer storage</h3><p>Ordered storage work, shared live sessions, one-time overflow claims, and protected maintenance operations reduce stale-save and dupe risks.</p></div>
             </div>
           </section>
         </section>
 
-        <section class="page" id="page-downloads" data-title="Download" data-keywords="download modrinth github releases jar plugin">
-          <section class="doc-section">
-            <h3>Download</h3>
-            <p>Download the latest version of LsEnderChest or browse the source code and releases.</p>
+        <!-- INSTALLATION -->
+        <section class="page" id="page-installation" data-title="Installation" data-keywords="install installation setup jar plugins folder first start configuration luckperms">
+          <header class="page-header">
+            <div class="page-kicker">Getting started</div>
+            <h1 class="page-title">Installation</h1>
+            <p class="page-lead">A normal installation takes a few minutes. SQLite works out of the box, so MySQL is optional.</p>
+          </header>
+          <section class="section">
+            <div class="steps">
+              <div class="step"><strong>Download LsEnderChest 2.0.0</strong> from Modrinth.</div>
+              <div class="step">Place the JAR inside your server's <code>plugins/</code> folder.</div>
+              <div class="step">Start or restart the server. LsEnderChest will create its configuration and internal data files.</div>
+              <div class="step">Assign <code>enderchest.rows.1</code> through <code>enderchest.rows.6</code> to your ranks. Players without one use <code>settings.default-rows</code>.</div>
+              <div class="step">Test <code>/ec</code> in game. <code>/lsec</code> and <code>/enderchest</code> work the same way.</div>
+            </div>
+            <div class="callout good">Using EssentialsX? LsEnderChest intentionally owns the bare <code>/ec</code> and <code>/enderchest</code> labels when both plugins are installed.</div>
+          </section>
+        </section>
 
-            <div class="card-grid">
-              <div class="card">
-                <h4>Main Plugin</h4>
-                <p>Get the latest public release of LsEnderChest.</p>
-                <div class="pill-row">
-                  <a class="btn btn-primary" href="https://modrinth.com/plugin/lsenderchest" target="_blank" rel="noopener noreferrer">Download Plugin</a>
-                  <a class="btn" href="https://github.com/lopikss/LsEnderChest/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>
-                </div>
-              </div>
-
-              <div class="card">
-                <h4>Source Code</h4>
-                <p>Browse the repository, changelog, and code.</p>
-                <div class="pill-row">
-                  <a class="btn" href="https://github.com/lopikss/LsEnderChest" target="_blank" rel="noopener noreferrer">Open Repository</a>
-                </div>
-              </div>
+        <!-- COMPATIBILITY -->
+        <section class="page" id="page-compatibility" data-title="Compatibility" data-keywords="compatibility paper purpur folia velocity java 25 minecraft 26.3 loaders">
+          <header class="page-header">
+            <div class="page-kicker">Requirements</div>
+            <h1 class="page-title">Compatibility</h1>
+            <p class="page-lead">This 2.0.0 build targets the modern Paper 26.3 API and Java 25.</p>
+          </header>
+          <section class="section">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Platform</th><th>Status</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr><td>Paper 26.3</td><td><span class="status good">Supported</span></td><td>Primary target.</td></tr>
+                  <tr><td>Purpur 26.3</td><td><span class="status good">Supported</span></td><td>Paper-based server platform.</td></tr>
+                  <tr><td>Folia</td><td><span class="status warn">Not advertised</span></td><td>This build has not been made/tested as Folia-safe.</td></tr>
+                  <tr><td>Velocity / BungeeCord</td><td><span class="status warn">Not applicable</span></td><td>LsEnderChest is a backend server plugin, not a proxy plugin.</td></tr>
+                  <tr><td>Spigot / Bukkit</td><td><span class="status warn">Not advertised</span></td><td>2.0 targets Paper APIs and behavior.</td></tr>
+                  <tr><td>Java</td><td><span class="status good">25</span></td><td>Required for this server generation.</td></tr>
+                </tbody>
+              </table>
             </div>
           </section>
         </section>
 
-        <section class="page" id="page-features" data-title="Features" data-keywords="features expandable storage rows async saving logging restrictions offline players mysql sqlite">
-          <section class="doc-section">
-            <h3>Features</h3>
-            <div class="card-grid">
-              <div class="card">
-                <h4>Expandable Ender Chests</h4>
-                <p>Players can have between 1 and 6 rows depending on their permissions.</p>
-              </div>
-
-              <div class="card">
-                <h4>Staff Access</h4>
-                <p>Use <code>/lsec &lt;player&gt;</code> to view or edit another player’s chest depending on permissions.</p>
-              </div>
-
-              <div class="card">
-                <h4>Advanced Item Restrictions</h4>
-                <p>Restrict items by material, lore, and NBT with blacklist or whitelist support.</p>
-              </div>
-
-              <div class="card">
-                <h4>Restriction Bypass Permission</h4>
-                <p>Give trusted players or staff a permission to bypass blocked item restrictions.</p>
-              </div>
-
-              <div class="card">
-                <h4>Async Saving</h4>
-                <p>Chest data saves asynchronously to reduce lag when inventories are closed.</p>
-              </div>
-
-              <div class="card">
-                <h4>Dual Logging System</h4>
-                <p>Includes a clean simple log and a detailed audit log for staff investigations.</p>
-              </div>
-
-              <div class="card">
-                <h4>Offline Player Support</h4>
-                <p>Staff can open the Ender Chests of players even when they are offline.</p>
-              </div>
-
-              <div class="card">
-                <h4>SQLite &amp; MySQL</h4>
-                <p>Choose local database storage or an external database setup depending on your server.</p>
-              </div>
+        <!-- FEATURES -->
+        <section class="page" id="page-features" data-title="Features" data-keywords="features rows storage restore overflow admins conversion logs update checker blocked items async mysql sqlite">
+          <header class="page-header">
+            <div class="page-kicker">LsEnderChest 2.0</div>
+            <h1 class="page-title">Features</h1>
+            <p class="page-lead">The plugin stays focused on Ender Chest storage, but 2.0 adds much stronger recovery and administration tools.</p>
+          </header>
+          <section class="section">
+            <div class="cards three">
+              <div class="card"><h3>Expandable storage</h3><p>Give players 1–6 rows using permissions. The highest row permission wins.</p></div>
+              <div class="card"><h3>Shared live sessions</h3><p>Owners and authorized admins can interact with the same live inventory at the same time.</p></div>
+              <div class="card"><h3>GUI restore history</h3><p>Session snapshots can be previewed and restored with confirmation.</p></div>
+              <div class="card"><h3>Overflow Chests</h3><p>Permission downgrades no longer make items outside the new size disappear.</p></div>
+              <div class="card"><h3>Built-in conversion</h3><p>Safely migrate vanilla Ender Chest contents without a separate converter plugin.</p></div>
+              <div class="card"><h3>Per-player audit logs</h3><p>Each chest owner gets a UUID journal containing player, admin, conversion, overflow, and restore activity.</p></div>
+              <div class="card"><h3>SQLite &amp; MySQL</h3><p>Use local storage by default or connect to an external MySQL database.</p></div>
+              <div class="card"><h3>Blocked-item rules</h3><p>Blacklist/whitelist support for materials, lore, and supported item data components.</p></div>
+              <div class="card"><h3>Update checker</h3><p>Admins can receive a clickable notification when a newer plugin version is published.</p></div>
             </div>
           </section>
         </section>
 
-        <section class="page" id="page-commands" data-title="Commands" data-keywords="commands lsec reload open player admin">
-          <section class="doc-section">
+        <!-- COMMANDS -->
+        <section class="page" id="page-commands" data-title="Commands" data-keywords="commands ec enderchest lsec restore convert confirm reload player admin">
+          <header class="page-header">
+            <div class="page-kicker">Usage</div>
+            <h1 class="page-title">Commands</h1>
+            <p class="page-lead"><code>/ec</code>, <code>/lsec</code>, and <code>/enderchest</code> are equivalent root commands.</p>
+          </header>
+          <section class="section">
+            <div class="command-list">
+              <div class="command"><code>/ec</code><span>Open your own LsEnderChest.</span></div>
+              <div class="command"><code>/ec &lt;player&gt;</code><span>Open another player's chest. Admins can edit; view-only users depend on permission.</span></div>
+              <div class="command"><code>/ec restore &lt;player&gt;</code><span>Open the restore-history GUI for a player.</span></div>
+              <div class="command"><code>/ec convert &lt;player&gt;</code><span>Run the built-in vanilla conversion for one online player.</span></div>
+              <div class="command"><code>/ec convert all</code><span>Arm a bulk conversion. It does not start until confirmed.</span></div>
+              <div class="command"><code>/ec confirm</code><span>Confirm the pending dangerous action. Bulk conversion confirmations expire after 30 seconds.</span></div>
+              <div class="command"><code>/ec reload</code><span>Reload supported configuration, messages, titles, rules, and runtime files.</span></div>
+            </div>
+            <div class="callout">Every command above can also use <code>/lsec</code> or <code>/enderchest</code> instead of <code>/ec</code>.</div>
+          </section>
+        </section>
+
+        <!-- PERMISSIONS -->
+        <section class="page" id="page-permissions" data-title="Permissions" data-keywords="permissions enderchest.use admin view other convert bypass blocked rows luckperms">
+          <header class="page-header">
+            <div class="page-kicker">Administration</div>
+            <h1 class="page-title">Permissions</h1>
+            <p class="page-lead">Use your permission plugin to control access and Ender Chest size.</p>
+          </header>
+          <section class="section">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Permission</th><th>Description</th><th>Default</th></tr></thead>
+                <tbody>
+                  <tr><td><code>enderchest.use</code></td><td>Open your own custom Ender Chest.</td><td>true</td></tr>
+                  <tr><td><code>enderchest.admin</code></td><td>Edit other players' chests, use restore, and reload the plugin.</td><td>op</td></tr>
+                  <tr><td><code>enderchest.view.other</code></td><td>Open other players' Ender Chests in read-only mode.</td><td>false</td></tr>
+                  <tr><td><code>enderchest.convert</code></td><td>Use the built-in vanilla Ender Chest converter.</td><td>op</td></tr>
+                  <tr><td><code>enderchest.bypass</code></td><td>Use the vanilla Ender Chest instead of the custom system.</td><td>false</td></tr>
+                  <tr><td><code>enderchest.blocked.bypass</code></td><td>Bypass blocked-item restrictions.</td><td>op</td></tr>
+                  <tr><td><code>enderchest.rows.1</code> … <code>enderchest.rows.6</code></td><td>Give 1–6 rows. If several are present, the highest wins.</td><td>false</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <!-- RESTORE -->
+        <section class="page" id="page-restore" data-title="Restore system" data-keywords="restore history gui session snapshots preview backup admin rollback audit">
+          <header class="page-header">
+            <div class="page-kicker">Recovery</div>
+            <h1 class="page-title">Restore system</h1>
+            <p class="page-lead">Restore points are session-based, so one chest open → close cycle becomes one useful snapshot instead of hundreds of tiny click events.</p>
+          </header>
+          <section class="section">
+            <h2>How a restore works</h2>
+            <div class="flow">
+              <span class="flow-item">/ec restore &lt;player&gt;</span><span class="flow-arrow">→</span>
+              <span class="flow-item">Choose session</span><span class="flow-arrow">→</span>
+              <span class="flow-item">Preview contents</span><span class="flow-arrow">→</span>
+              <span class="flow-item">Confirm</span><span class="flow-arrow">→</span>
+              <span class="flow-item">Restore</span>
+            </div>
+            <div class="cards" style="margin-top:14px">
+              <div class="card"><h3>Session snapshots</h3><p>A session starts when the chest is opened and ends when the final editable viewer closes it.</p></div>
+              <div class="card"><h3>Pre-restore backup</h3><p>The current state is backed up before a historical state is applied, so an accidental restore can itself be undone.</p></div>
+              <div class="card"><h3>Admin-safe</h3><p>The GUI includes history, preview, and confirmation instead of applying a rollback on the first click.</p></div>
+              <div class="card"><h3>Overflow-aware</h3><p>Historical Overflow Chests get safe backing storage when restored instead of reusing already-claimed overflow records.</p></div>
+            </div>
+            <div class="callout warning">Restore is intentionally an administrative feature. A normal player restoring old items after removing them would create an obvious duplication path.</div>
+          </section>
+        </section>
+
+        <!-- OVERFLOW -->
+        <section class="page" id="page-overflow" data-title="Overflow protection" data-keywords="overflow chest rank permission rows downgrade shrink items one time right click drop lore metadata security">
+          <header class="page-header">
+            <div class="page-kicker">Item safety</div>
+            <h1 class="page-title">Overflow protection</h1>
+            <p class="page-lead">When a player's allowed chest size gets smaller, LsEnderChest protects everything that no longer fits.</p>
+          </header>
+          <section class="section">
+            <h2>Example: 4 rows → 1 row</h2>
+            <p>Slots 1–8 stay where they are. Everything from slot 9 onward is moved into an Overflow Chest, and the Overflow Chest becomes slot 9.</p>
+            <div class="code-block">
+              <div class="code-head"><span>One-row result</span></div>
+              <pre>[1] [2] [3] [4] [5] [6] [7] [8] [Overflow Chest]</pre>
+            </div>
+            <div class="cards" style="margin-top:14px">
+              <div class="card"><h3>Not portable storage</h3><p>The item never opens a storage GUI. Players cannot add extra items to it.</p></div>
+              <div class="card"><h3>One-time recovery</h3><p>Right-clicking consumes the token and drops every protected item on the ground at the player's location.</p></div>
+              <div class="card"><h3>Server-backed contents</h3><p>Real contents are stored server-side. The chest item carries protected metadata identifying its backing record.</p></div>
+              <div class="card"><h3>Configurable lore</h3><p>The displayed lore supports color codes and placeholders such as <code>%items%</code>, <code>%created%</code>, <code>%source_rows%</code>, and <code>%target_rows%</code>.</p></div>
+            </div>
+            <div class="callout good">Copying the visible name or lore does not create a valid Overflow Chest. The real record must exist and be successfully claimed.</div>
+          </section>
+        </section>
+
+        <!-- CONVERSION -->
+        <section class="page" id="page-conversion" data-title="Conversion" data-keywords="converter vanilla migration convert all confirm first join lsenderchestconverter">
+          <header class="page-header">
+            <div class="page-kicker">Migration</div>
+            <h1 class="page-title">Built-in conversion</h1>
+            <p class="page-lead">LsEnderChest 2.0 replaces the old standalone LsEnderChestConverter with migration built into the main plugin.</p>
+          </header>
+          <section class="section">
+            <div class="steps">
+              <div class="step">The player's vanilla Ender Chest contents are read.</div>
+              <div class="step">LsEnderChest writes the converted contents into custom storage.</div>
+              <div class="step">The original vanilla snapshot is verified again.</div>
+              <div class="step">Only after custom storage succeeds are the vanilla contents cleared.</div>
+              <div class="step">The player is marked converted so automatic migration does not repeat.</div>
+            </div>
             <h3>Commands</h3>
-            <p>LsEnderChest keeps commands simple and easy to remember.</p>
-
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Command</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>/lsec</code></td>
-                    <td>Opens your own Ender Chest.</td>
-                  </tr>
-                  <tr>
-                    <td><code>/lsec &lt;player&gt;</code></td>
-                    <td>Opens another player’s Ender Chest. Access depends on permissions.</td>
-                  </tr>
-                  <tr>
-                    <td><code>/lsec reload</code></td>
-                    <td>Reloads the plugin configuration.</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="command-list">
+              <div class="command"><code>/ec convert &lt;player&gt;</code><span>Convert one online player.</span></div>
+              <div class="command"><code>/ec convert all</code><span>Arm conversion for eligible online players. Nothing changes yet.</span></div>
+              <div class="command"><code>/ec confirm</code><span>Confirm the pending bulk operation before it expires.</span></div>
             </div>
+            <div class="callout danger">If you still have the standalone LsEnderChestConverter installed, remove it when moving to 2.0.0. Conversion belongs to the main plugin now.</div>
           </section>
         </section>
 
-        <section class="page" id="page-permissions" data-title="Permissions" data-keywords="permissions enderchest.use enderchest.admin enderchest.view.other enderchest.blocked.bypass rows permissions luckperms">
-          <section class="doc-section">
-            <h3>Permissions</h3>
-            <p>Permissions control access, row size, and restriction bypass behavior.</p>
-
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Permission</th>
-                    <th>Description</th>
-                    <th>Default</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>enderchest.use</code></td>
-                    <td>Allows players to open their own Ender Chest.</td>
-                    <td>true</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.admin</code></td>
-                    <td>Allows opening and editing other players’ Ender Chests.</td>
-                    <td>op</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.view.other</code></td>
-                    <td>Allows viewing other players’ Ender Chests in read-only mode.</td>
-                    <td>op</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.bypass</code></td>
-                    <td>Allows players to use the vanilla Ender Chest block instead of the plugin system.</td>
-                    <td>op</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.blocked.bypass</code></td>
-                    <td>Bypasses item restriction checks.</td>
-                    <td>op</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.rows.1</code></td>
-                    <td>Allows 1 row of storage.</td>
-                    <td>false</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.rows.2</code></td>
-                    <td>Allows 2 rows of storage.</td>
-                    <td>false</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.rows.3</code></td>
-                    <td>Allows 3 rows of storage.</td>
-                    <td>false</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.rows.4</code></td>
-                    <td>Allows 4 rows of storage.</td>
-                    <td>false</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.rows.5</code></td>
-                    <td>Allows 5 rows of storage.</td>
-                    <td>false</td>
-                  </tr>
-                  <tr>
-                    <td><code>enderchest.rows.6</code></td>
-                    <td>Allows 6 rows of storage.</td>
-                    <td>false</td>
-                  </tr>
-                </tbody>
-              </table>
+        <!-- LOGGING -->
+        <section class="page" id="page-logging" data-title="Logging & audit" data-keywords="logging audit uuid journals logs session player admin actor restore simple detailed legacy">
+          <header class="page-header">
+            <div class="page-kicker">Audit trail</div>
+            <h1 class="page-title">Logging &amp; audit</h1>
+            <p class="page-lead">2.0 removes the old global simple/detailed log model and gives each chest owner a dedicated UUID journal.</p>
+          </header>
+          <section class="section">
+            <div class="code-block">
+              <div class="code-head"><span>Journal path</span><button class="copy-btn" data-copy>Copy</button></div>
+              <pre>plugins/LsEnderChest/logs/players/&lt;uuid&gt;.log</pre>
             </div>
+            <div class="cards" style="margin-top:14px">
+              <div class="card"><h3>Individual actions</h3><p>Item additions/removals, opens, blocked attempts, conversion, overflow, and restore activity can be audited.</p></div>
+              <div class="card"><h3>Real actor recorded</h3><p>If an admin modifies somebody else's chest, the target player's journal records which admin performed the action.</p></div>
+              <div class="card"><h3>Session restore points</h3><p>Restore history is grouped by chest session rather than every item click.</p></div>
+              <div class="card"><h3>Legacy logs</h3><p>Older <code>simple.log</code> and <code>detailed.log</code> files are treated as legacy data rather than the active 2.0 logging model.</p></div>
+            </div>
+            <div class="callout">Turning verbose logging off does not remove the restore records needed for <code>/ec restore</code>.</div>
           </section>
         </section>
 
-        <section class="page" id="page-storage" data-title="Storage" data-keywords="storage sqlite mysql database local external offline player data">
-          <section class="doc-section">
-            <h3>Storage</h3>
-            <p>
-              LsEnderChest stores chest contents outside of the vanilla Ender Chest system. This makes expandable sizes, offline access, and staff tools possible in a clean and reliable way.
-            </p>
-
-            <div class="card-grid">
-              <div class="card">
-                <h4>SQLite</h4>
-                <p>Best for most single-server setups. Easy to use and requires no extra database software.</p>
-              </div>
-              <div class="card">
-                <h4>MySQL</h4>
-                <p>Best for larger setups or networks that prefer dedicated external database infrastructure.</p>
-              </div>
+        <!-- STORAGE -->
+        <section class="page" id="page-storage" data-title="Storage" data-keywords="storage sqlite mysql database db jdbc async local external">
+          <header class="page-header">
+            <div class="page-kicker">Data</div>
+            <h1 class="page-title">Storage</h1>
+            <p class="page-lead">LsEnderChest stores custom chest data outside vanilla Ender Chest storage so variable sizes, offline access, restores, and overflow records can work reliably.</p>
+          </header>
+          <section class="section">
+            <div class="cards">
+              <div class="card"><h3>SQLite</h3><p>Recommended for a normal single server. No external database server is required. The default database lives under <code>plugins/LsEnderChest/EnderChest/database.db</code>.</p></div>
+              <div class="card"><h3>MySQL</h3><p>Use an external MySQL database when your setup requires centralized database infrastructure.</p></div>
             </div>
-
-            <div class="pill-row">
-              <span class="pill">Supports non-vanilla inventory sizes</span>
-              <span class="pill">Better offline player handling</span>
-              <span class="pill">Separate from vanilla Ender Chest data</span>
-            </div>
+            <div class="callout warning">Changing storage type or UUID mode is not a normal hot-reload change. Restart the server after changing those settings.</div>
           </section>
         </section>
 
-        <section class="page" id="page-config-guide" data-title="Config Guide" data-keywords="config guide yml logging title messages mysql sqlite settings blocked-item">
-          <section class="doc-section">
-            <h3>Config Guide</h3>
-            <p>Below is an updated <strong>config-guide.yml</strong> reference that matches the newer config structure.</p>
+        <!-- CONFIG -->
+        <section class="page" id="page-configuration" data-title="Configuration" data-keywords="config configuration yml online mode default rows tab complete conversion logging restore updates title messages overflow lore placeholders">
+          <header class="page-header">
+            <div class="page-kicker">Configuration</div>
+            <h1 class="page-title">Configuration</h1>
+            <p class="page-lead">The defaults are designed to work for most servers. Storage/UUID changes require a restart; normal presentation and behavior settings can be reloaded.</p>
+          </header>
+          <section class="section">
+            <div class="cards">
+              <div class="card"><h3><code>settings.online-mode</code></h3><p>Use authenticated/proxy-forwarded UUIDs when true. Changing UUID mode after data exists can make old storage appear under another UUID.</p></div>
+              <div class="card"><h3><code>settings.default-rows</code></h3><p>Fallback row count (1–6) when a player has no <code>enderchest.rows.*</code> permission.</p></div>
+              <div class="card"><h3><code>conversion.convert-on-first-join</code></h3><p>Automatically migrate vanilla Ender Chest contents once when a player joins.</p></div>
+              <div class="card"><h3><code>restore.max-history</code></h3><p>Controls how many restore points are loaded into the restore-history GUI.</p></div>
+              <div class="card"><h3><code>updates.*</code></h3><p>Enable update checks and admin notifications. Updates are never installed automatically.</p></div>
+              <div class="card"><h3><code>overflow-chest.lore</code></h3><p>Customize newly generated Overflow Chest lore with colors and placeholders.</p></div>
+            </div>
 
-            <div class="code">
-              <pre># =========================================================
-# LsEnderChest - config-guide.yml
-# =========================================================
-#
-# This file explains every option in the normal config.yml.
-#
-# This plugin allows players to have custom ender chests
-# with permission-based row sizes and SQL storage.
-#
-# Supported storage types:
-#   sqlite -> local database file (recommended)
-#   mysql  -> external MySQL database (recommended if you want same ender chest storage across multiple servers)
-#
-# =========================================================
-
-storage:
-
-  # Choose how ender chest data should be stored.
-  #
-  # Options:
-  #   sqlite -> stores data locally in a .db file
-  #   mysql  -> stores data in a MySQL database
-  #
+            <h3>Recommended config structure</h3>
+            <div class="code-block">
+              <div class="code-head"><span>config.yml</span><button class="copy-btn" data-copy>Copy</button></div>
+<pre>storage:
   type: "sqlite"
 
   sqlite:
-
-    # Name or path of the SQLite database file.
-    #
-    # The file will be created inside the plugin folder.
-    #
-    # Example:
-    # "lsenderchest.db"
-    # "EnderChest/database.db"
-    #
     file: "EnderChest/database.db"
 
   mysql:
-
-    # Address of the MySQL server.
-    #
-    # Examples:
-    # localhost
-    # 127.0.0.1
-    # db.example.com
-    #
     host: "localhost"
-
-    # MySQL server port.
-    # Default MySQL port: 3306
-    #
     port: 3306
-
-    # Name of the database used by the plugin.
-    #
     database: "lsenderchest"
-
-    # MySQL username used to connect.
-    #
     username: "user"
-
-    # MySQL password used to connect.
-    #
     password: "password"
-
-    # Extra connection parameters.
-    #
-    # Usually this does not need to be changed.
-    #
-    parameters: "?useSSL=false&autoReconnect=true"
+    parameters: "?useSSL=false&amp;autoReconnect=true"
 
 settings:
-
-  # Controls how player UUIDs are generated.
-  #
-  # true  -> normal Mojang UUIDs (online-mode servers)
-  # false -> offline-mode/cracked UUID generation
-  #
-  # IMPORTANT:
-  # Changing this after players already have stored data
-  # may cause their old ender chest data to appear missing.
-  #
   online-mode: true
-
-  # Default amount of rows a player receives if they
-  # do not have any row permissions.
-  #
-  # Minimum: 1
-  # Maximum: 6
-  #
   default-rows: 1
-
-  # Controls /lsec tab completion.
-  #
-  # true  -> shows players who joined before
-  # false -> only shows online players
-  #
   tab-complete-offline-players: true
 
+conversion:
+  convert-on-first-join: true
+
 logging:
+  enabled: true
 
-  # Simple logging writes short readable item changes.
-  #
-  # File:
-  # plugins/LsEnderChest/logs/enderchest.log
-  #
-  # Format:
-  # + player ITEM xamount [yyyy-MM-dd HH:mm:ss]
-  # - player ITEM xamount [yyyy-MM-dd HH:mm:ss]
-  #
-  # This log only tracks items being added to or removed
-  # from Ender Chests.
-  #
-  simple: true
+restore:
+  max-history: 100
 
-  # Detailed logging writes a full audit log.
-  #
-  # File:
-  # plugins/LsEnderChest/logs/detailed.log
-  #
-  # This includes extra information such as:
-  # - who opened whose chest
-  # - item move details
-  # - blocked item attempts
-  # - read-only edit attempts
-  # - click type and inventory action
-  # - world and coordinates
-  #
-  detailed: true
+updates:
+  enabled: true
+  notify-admins: true
 
 title:
+  chest: "%player%'s Ender Chest"
 
-  # Title shown when a player opens their own Ender Chest.
-  #
-  # Leave without color codes for vanilla look.
-  #
-  own: "Your Ender Chest"
+overflow-chest:
+  lore:
+    - "&amp;7Extra items that no longer fit in your Ender Chest."
+    - ""
+    - "&amp;fItems: &amp;e%items%"
+    - "&amp;fCreated: &amp;7%created%"
+    - ""
+    - "&amp;bRight-click to release all items"
+    - "&amp;8Contents will be dropped on the ground."
+    - "&amp;8One-time use • Cannot be placed"</pre>
+            </div>
+            <div class="callout">Overflow lore placeholders: <code>%items%</code>, <code>%created%</code>, <code>%source_rows%</code>, and <code>%target_rows%</code>.</div>
+          </section>
+        </section>
 
-  # Title shown when opening another player's Ender Chest.
-  #
-  # Available placeholders:
-  # %player% -> target player's name
-  #
-  other: "%player%'s Ender Chest"
+        <!-- BLOCKED ITEMS -->
+        <section class="page" id="page-blocked-items" data-title="Blocked items" data-keywords="blocked items blacklist whitelist material lore components custom model data dragon egg player head soulbound">
+          <header class="page-header">
+            <div class="page-kicker">Restrictions</div>
+            <h1 class="page-title">Blocked items</h1>
+            <p class="page-lead">Use <code>blocked-items.yml</code> to blacklist matches or switch to whitelist mode.</p>
+          </header>
+          <section class="section">
+            <div class="cards">
+              <div class="card"><h3>Materials</h3><p>Match Paper/Minecraft material names such as <code>DRAGON_EGG</code> or <code>PLAYER_HEAD</code>.</p></div>
+              <div class="card"><h3>Lore</h3><p>Match plain-text lore lines. Legacy <code>&amp;</code> color codes are ignored while comparing.</p></div>
+              <div class="card"><h3>Data components</h3><p>Block supported item data components such as <code>CUSTOM_MODEL_DATA</code>.</p></div>
+              <div class="card"><h3>Bypass</h3><p><code>enderchest.blocked.bypass</code> allows trusted users to ignore restrictions.</p></div>
+            </div>
+            <div class="code-block">
+              <div class="code-head"><span>blocked-items.yml</span><button class="copy-btn" data-copy>Copy</button></div>
+<pre>mode: BLACKLIST
 
-messages:
+blocked-items:
+  - DRAGON_EGG
+  - PLAYER_HEAD
 
-  # Message shown when the player does not have permission.
-  #
-  no-permission: "&cYou do not have permission."
+blocked-lore:
+  - Soulbound
 
-  # Message shown when the target player cannot be found.
-  #
-  player-not-found: "&cThat player could not be found."
-
-  # Message shown after opening another player's Ender Chest.
-  #
-  # Available placeholders:
-  # %player% -> target player's name
-  #
-  opened-other: "&aOpened %player%'s ender chest."
-
-  # Message shown after using /lsec reload.
-  #
-  reloaded: "&aConfiguration reloaded."
-
-  # Message shown when a blocked item is attempted to be placed
-  # into an Ender Chest.
-  #
-  blocked-item: "&cThat item is not allowed in your Ender Chest."</pre>
+blocked-components:
+  - CUSTOM_MODEL_DATA</pre>
             </div>
           </section>
         </section>
 
-        <section class="page" id="page-converter" data-title="Converter" data-keywords="converter migration vanilla join convert commands github releases">
-          <section class="doc-section">
-            <h3>LsEnderChestConverter</h3>
-            <p>Switching from vanilla Ender Chests to LsEnderChest? Use the converter plugin to migrate safely.</p>
-
-            <div class="card">
-              <p>
-                <a class="btn btn-primary" href="https://github.com/lopikss/LsEnderChestConverter/releases" target="_blank" rel="noopener noreferrer">Download Converter</a>
-              </p>
-              <ul>
-                <li>Automatic conversion on join</li>
-                <li>Optional manual conversion commands</li>
-                <li>Safe migration without item loss</li>
-              </ul>
+        <!-- INTERNAL DATA -->
+        <section class="page" id="page-internal-data" data-title="Internal data" data-keywords="internal data EnderChest folder readme database converted players row state overflow secret key do not touch">
+          <header class="page-header">
+            <div class="page-kicker">Internal files</div>
+            <h1 class="page-title">Internal data</h1>
+            <p class="page-lead">Runtime state that server owners should normally leave alone is kept under the <code>EnderChest/</code> subfolder instead of cluttering the plugin root.</p>
+          </header>
+          <section class="section">
+            <div class="folder-tree">plugins/LsEnderChest/
+├── config.yml
+├── config-guide.yml
+├── blocked-items.yml
+├── logs/
+└── EnderChest/
+    ├── README.txt
+    ├── database.db
+    ├── converted-players.yml
+    ├── row-state.yml
+    └── overflow-secret.key</div>
+            <div class="cards" style="margin-top:14px">
+              <div class="card"><h3><code>database.db</code></h3><p>SQLite player/overflow storage when SQLite is enabled.</p></div>
+              <div class="card"><h3><code>converted-players.yml</code></h3><p>Tracks players whose vanilla Ender Chest has already been converted.</p></div>
+              <div class="card"><h3><code>row-state.yml</code></h3><p>Tracks last-known row counts so permission downgrades can be detected safely.</p></div>
+              <div class="card"><h3><code>overflow-secret.key</code></h3><p>Security key used to verify genuine Overflow Chest recovery items.</p></div>
             </div>
+            <div class="callout danger"><strong>Do not edit, delete, move, or replace files in this folder unless you know exactly what you are doing.</strong> In particular, changing or deleting <code>overflow-secret.key</code> can invalidate existing Overflow Chests.</div>
           </section>
         </section>
 
-        <section class="page" id="page-preview" data-title="Preview" data-keywords="preview screenshot image gui chest plugin">
-          <section class="doc-section">
-            <h3>Preview</h3>
-            <p>Example screenshot of the plugin in use.</p>
-            <div class="preview-box">
-              <img src="https://raw.githubusercontent.com/lopikss/LsEnderChest/refs/heads/main/images/echest.png" alt="LsEnderChest preview image">
-            </div>
+        <!-- PREVIEW -->
+        <section class="page" id="page-preview" data-title="Preview" data-keywords="preview screenshot image gui minecraft chest">
+          <header class="page-header">
+            <div class="page-kicker">In game</div>
+            <h1 class="page-title">Preview</h1>
+            <p class="page-lead">A simple view of the plugin in use.</p>
+          </header>
+          <section class="section">
+            <figure class="preview" style="max-width:860px;margin:0 auto">
+              <img src="https://raw.githubusercontent.com/lopikss/LsEnderChest/refs/heads/main/images/echest.png" alt="LsEnderChest preview" />
+              <figcaption>LsEnderChest preview</figcaption>
+            </figure>
           </section>
         </section>
 
-        <section class="page" id="page-use-cases" data-title="Use Cases" data-keywords="use cases survival staff moderation ranks perks donor offline review">
-          <section class="doc-section">
-            <h3>Use Cases</h3>
-            <ul>
-              <li>Give default players a small Ender Chest and higher ranks more space.</li>
-              <li>Offer extra rows as a store perk.</li>
-              <li>Allow staff to inspect chests during support tickets or moderation cases.</li>
-              <li>Review offline player storage when handling suspicious activity or recovery requests.</li>
-            </ul>
-          </section>
-        </section>
-
-        <section class="page" id="page-compatibility" data-title="Compatibility" data-keywords="compatibility paper minecraft java 21 supported">
-          <section class="doc-section">
-            <h3>Compatibility</h3>
-            <div class="pill-row">
-              <span class="pill">Paper</span>
-              <span class="pill">Minecraft 1.21.x</span>
-              <span class="pill">Java 21</span>
-            </div>
-          </section>
-        </section>
-
-        <section class="page" id="page-installation" data-title="Installation" data-keywords="installation install setup plugins folder config permissions ranks">
-          <section class="doc-section">
-            <h3>Installation</h3>
-            <div class="code">
-              <pre>1. Download the plugin jar
-2. Place it in your server's plugins folder
-3. Start or restart the server
-4. Edit config.yml if needed
-5. Assign row permissions to your ranks
-6. Test /lsec in-game</pre>
-            </div>
-          </section>
-        </section>
-
-        <p class="footer">LsEnderChest wiki • made for lopikss</p>
+        <footer class="footer">
+          <span>LsEnderChest 2.0.0 documentation</span>
+          <span>Made by lopikss · <a href="https://lsplugins.com" target="_blank" rel="noopener noreferrer">LsPlugins.com</a></span>
+        </footer>
       </main>
     </div>
   </div>
 
   <script>
-    const sidebar = document.getElementById("sidebar");
-    const menuBtn = document.getElementById("menuBtn");
-    const navButtons = Array.from(document.querySelectorAll(".nav button[data-page]"));
-    const pages = Array.from(document.querySelectorAll(".page"));
-    const searchInput = document.getElementById("searchInput");
-    const searchResults = document.getElementById("searchResults");
-    const searchResultList = document.getElementById("searchResultList");
-    const navEmpty = document.getElementById("navEmpty");
-    const quickOpenButtons = document.querySelectorAll("[data-open-page]");
+    const sidebar = document.getElementById('sidebar');
+    const drawerBackdrop = document.getElementById('drawerBackdrop');
+    const menuBtn = document.getElementById('menuBtn');
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const searchResultList = document.getElementById('searchResultList');
+    const searchCount = document.getElementById('searchCount');
+    const currentPageLabel = document.getElementById('currentPageLabel');
+    const navButtons = [...document.querySelectorAll('.nav button[data-page]')];
+    const pages = [...document.querySelectorAll('.page')];
+    const quickOpen = [...document.querySelectorAll('[data-open-page]')];
 
-    function setActivePage(pageId, pushHash = true) {
-      pages.forEach(page => {
-        page.classList.toggle("active", page.id === "page-" + pageId);
-      });
-
-      navButtons.forEach(button => {
-        button.classList.toggle("active", button.dataset.page === pageId);
-      });
-
-      if (pushHash) {
-        history.replaceState(null, "", "#" + pageId);
-      }
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-
-      if (window.innerWidth <= 980) {
-        sidebar.classList.remove("open");
-      }
+    function pageTitle(id) {
+      const page = document.getElementById('page-' + id);
+      return page?.dataset.title || id;
     }
 
-    navButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        setActivePage(button.dataset.page);
-      });
-    });
-
-    quickOpenButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        const pageId = button.dataset.openPage;
-        setActivePage(pageId);
-      });
-    });
-
-    if (menuBtn) {
-      menuBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-      });
+    function openPage(id, updateHash = true) {
+      if (!document.getElementById('page-' + id)) return;
+      pages.forEach(page => page.classList.toggle('active', page.id === 'page-' + id));
+      navButtons.forEach(button => button.classList.toggle('active', button.dataset.page === id));
+      currentPageLabel.textContent = pageTitle(id);
+      document.title = `${pageTitle(id)} — LsEnderChest Docs`;
+      if (updateHash) history.replaceState(null, '', '#' + id);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      closeDrawer();
     }
 
-    function escapeHtml(text) {
-      return text
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;");
+    navButtons.forEach(button => button.addEventListener('click', () => openPage(button.dataset.page)));
+    quickOpen.forEach(button => button.addEventListener('click', () => openPage(button.dataset.openPage)));
+
+    function openDrawer() {
+      sidebar.classList.add('open');
+      drawerBackdrop.classList.add('visible');
+    }
+    function closeDrawer() {
+      sidebar.classList.remove('open');
+      drawerBackdrop.classList.remove('visible');
+    }
+    menuBtn?.addEventListener('click', openDrawer);
+    drawerBackdrop.addEventListener('click', closeDrawer);
+
+    function escapeHtml(value) {
+      return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
     }
 
-    function highlight(text, query) {
-      if (!query) return escapeHtml(text);
-      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      return escapeHtml(text).replace(
-        new RegExp("(" + escaped + ")", "ig"),
-        "<mark>$1</mark>"
-      );
+    function highlight(value, q) {
+      const safe = escapeHtml(value);
+      if (!q) return safe;
+      const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return safe.replace(new RegExp(`(${escaped})`, 'ig'), '<mark>$1</mark>');
     }
 
-    function buildSearchIndex() {
-      return pages.map(page => {
-        const title = page.dataset.title || "";
-        const keywords = page.dataset.keywords || "";
-        const text = page.innerText || "";
-        return {
-          id: page.id.replace("page-", ""),
-          title,
-          keywords,
-          text
-        };
-      });
-    }
+    const searchIndex = pages.map(page => ({
+      id: page.id.replace('page-', ''),
+      title: page.dataset.title || '',
+      keywords: page.dataset.keywords || '',
+      text: (page.innerText || '').replace(/\s+/g, ' ').trim()
+    }));
 
-    const searchIndex = buildSearchIndex();
-
-    function renderSearchResults(query) {
+    function renderSearch(query) {
       const q = query.trim().toLowerCase();
-
-      navButtons.forEach(button => {
-        const matches = button.textContent.toLowerCase().includes(q);
-        button.style.display = matches || !q ? "" : "none";
-      });
-
-      const anyVisibleNav = navButtons.some(button => button.style.display !== "none");
-      navEmpty.style.display = (!anyVisibleNav && q) ? "block" : "none";
-
       if (!q) {
-        searchResults.classList.remove("visible");
-        searchResultList.innerHTML = "";
+        searchResults.classList.remove('visible');
+        searchResultList.innerHTML = '';
+        searchCount.textContent = '';
         return;
       }
 
-      const matches = searchIndex
-        .filter(item =>
-          item.title.toLowerCase().includes(q) ||
-          item.keywords.toLowerCase().includes(q) ||
-          item.text.toLowerCase().includes(q)
-        )
-        .slice(0, 8);
+      const results = searchIndex.filter(item =>
+        item.title.toLowerCase().includes(q) ||
+        item.keywords.toLowerCase().includes(q) ||
+        item.text.toLowerCase().includes(q)
+      ).slice(0, 8);
 
-      searchResultList.innerHTML = "";
+      searchResults.classList.add('visible');
+      searchCount.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
+      searchResultList.innerHTML = '';
 
-      if (!matches.length) {
-        searchResults.classList.add("visible");
-        searchResultList.innerHTML = `<div class="search-result"><strong>No results found</strong><span>Try another keyword.</span></div>`;
+      if (!results.length) {
+        searchResultList.innerHTML = `<div class="search-result"><strong>No results found</strong><span>Try a command, permission, feature, or config key.</span></div>`;
         return;
       }
 
-      matches.forEach(item => {
-        const snippetSource = item.text.replace(/\s+/g, " ").trim();
-        const index = snippetSource.toLowerCase().indexOf(q);
-        let snippet = snippetSource;
-
-        if (index >= 0) {
-          const start = Math.max(0, index - 60);
-          const end = Math.min(snippetSource.length, index + 120);
-          snippet = (start > 0 ? "..." : "") + snippetSource.slice(start, end) + (end < snippetSource.length ? "..." : "");
-        } else {
-          snippet = snippetSource.slice(0, 160) + (snippetSource.length > 160 ? "..." : "");
-        }
-
-        const card = document.createElement("div");
-        card.className = "search-result";
-        card.innerHTML = `
-          <strong>${highlight(item.title, q)}</strong>
-          <span>${highlight(snippet, q)}</span>
-        `;
-        card.addEventListener("click", () => {
-          setActivePage(item.id);
-          searchInput.value = "";
-          renderSearchResults("");
+      for (const item of results) {
+        const index = item.text.toLowerCase().indexOf(q);
+        const start = Math.max(0, index >= 0 ? index - 55 : 0);
+        const end = Math.min(item.text.length, index >= 0 ? index + 120 : 165);
+        const snippet = `${start ? '…' : ''}${item.text.slice(start, end)}${end < item.text.length ? '…' : ''}`;
+        const card = document.createElement('div');
+        card.className = 'search-result';
+        card.innerHTML = `<strong>${highlight(item.title, q)}</strong><span>${highlight(snippet, q)}</span>`;
+        card.addEventListener('click', () => {
+          openPage(item.id);
+          searchInput.value = '';
+          renderSearch('');
         });
         searchResultList.appendChild(card);
-      });
-
-      searchResults.classList.add("visible");
+      }
     }
 
-    searchInput.addEventListener("input", (event) => {
-      renderSearchResults(event.target.value);
+    searchInput.addEventListener('input', event => renderSearch(event.target.value));
+    document.addEventListener('keydown', event => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+      if (event.key === 'Escape') {
+        searchInput.blur();
+        searchInput.value = '';
+        renderSearch('');
+        closeDrawer();
+      }
     });
 
-    const initialHash = window.location.hash.replace("#", "");
-    const validPageIds = navButtons.map(button => button.dataset.page);
-
-    if (initialHash && validPageIds.includes(initialHash)) {
-      setActivePage(initialHash, false);
-    } else {
-      setActivePage("overview", false);
+    function applyTheme(theme) {
+      document.body.classList.toggle('light', theme === 'light');
+      localStorage.setItem('lsec-docs-theme', theme);
+      themeIcon.innerHTML = theme === 'light'
+        ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>'
+        : '<path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8Z"/>';
     }
+
+    applyTheme(localStorage.getItem('lsec-docs-theme') || 'dark');
+    themeBtn.addEventListener('click', () => applyTheme(document.body.classList.contains('light') ? 'dark' : 'light'));
+
+    document.querySelectorAll('[data-copy]').forEach(button => {
+      button.addEventListener('click', async () => {
+        const pre = button.closest('.code-block')?.querySelector('pre');
+        if (!pre) return;
+        try {
+          await navigator.clipboard.writeText(pre.innerText);
+          const old = button.textContent;
+          button.textContent = 'Copied';
+          setTimeout(() => button.textContent = old, 1200);
+        } catch {
+          button.textContent = 'Copy failed';
+          setTimeout(() => button.textContent = 'Copy', 1200);
+        }
+      });
+    });
+
+    const initial = location.hash.slice(1);
+    openPage(pages.some(page => page.id === 'page-' + initial) ? initial : 'overview', false);
   </script>
 </body>
 </html>
